@@ -70,6 +70,10 @@ function selectOption(option, category) {
     pywebview.api.rewrite_text(currentText, option, category);
 }
 
+function openSettings() {
+    pywebview.api.open_settings_window();
+}
+
 // Show text in the UI
 function showText(text) {
     currentText = text;

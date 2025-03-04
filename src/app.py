@@ -68,10 +68,11 @@ class Application:
         
         # Create the API instance
         self.web_api = WebViewAPI(
-            self.settings_manager, 
-            self.openai_manager, 
+            self.settings_manager,
+            self.openai_manager,
             self.clipboard_handler
         )
+        self.settings_window = None
 
     def initialize(self):
         # Create window
@@ -82,15 +83,17 @@ class Application:
             'Open Rewrite',
             html_path,
             js_api=self.web_api,  # Use the API instance
-            width=600, 
+            width=600,
             height=800,
             frameless=True,
             easy_drag=True,
         )
-        
+
         # Setup connections
         self.hotkey.connect(self.on_hotkey_activated)
         self.clipboard_handler.register_callback(self.on_text_copied)
+        webview.expose(self.web_api)
+        self.web_api.app = self
 
     def on_hotkey_activated(self):
         """Handle global hotkey activation"""
@@ -102,3 +105,22 @@ class Application:
             if webview.windows:
                 webview.windows[0].show()
                 webview.windows[0].evaluate_js(f"showText({repr(text)})")
+
+    def create_settings_window(self):
+        """Creates and shows the settings window."""
+        if self.settings_window is None:  # Only create one settings window
+            self.settings_window = webview.create_window(
+                "Settings",
+                "static/settings.html",  # Or wherever your settings HTML is
+                width=800,  # Adjust as needed
+                height=600, # Adjust as needed
+                resizable=False,
+                on_top=True
+            )
+            self.settings_window.events.closed += self.on_settings_window_closed
+        else:
+            self.settings_window.show() # If it exists, just show it
+
+    def on_settings_window_closed(self):
+        """Handles the settings window closing event."""
+        self.settings_window = None # Reset the window reference
