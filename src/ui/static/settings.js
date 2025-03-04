@@ -1,5 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
-    loadSettings(); // Load settings upon page load
+    // Function to execute after pywebview is ready
+    function initializeSettings() {
+        loadSettings(); // Load settings upon page load
+    }
+
+    // Check if pywebview is already ready
+    if (window.pywebview) {
+        initializeSettings();
+    } else {
+        // Wait for the pywebviewready event
+        window.addEventListener('pywebviewready', initializeSettings);
+    }
 });
 
 function loadSettings() {

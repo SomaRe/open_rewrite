@@ -4,14 +4,18 @@ let currentResult = '';
 
 // Initialize the app
 document.addEventListener('DOMContentLoaded', () => {
-    function checkPyWebView() {
-        if (typeof pywebview !== 'undefined') {
-            loadOptions();
-        } else {
-            setTimeout(checkPyWebView, 50); // Check again after 50ms
-        }
+    // Function to execute after pywebview is ready
+    function initializeApp() {
+        loadOptions();
     }
-    checkPyWebView();
+
+    // Check if pywebview is already ready
+    if (window.pywebview) {
+        initializeApp();
+    } else {
+        // Wait for the pywebviewready event
+        window.addEventListener('pywebviewready', initializeApp);
+    }
 });
 
 // Load options from settings
