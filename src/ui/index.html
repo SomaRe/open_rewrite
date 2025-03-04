@@ -12,11 +12,13 @@
         <!-- Title Bar -->
         <div class="title-bar pywebview-drag-region">
             <div class="drag-handle"></div>
-            <button class="settings-btn" onclick="openSettings()">
-                <span class="material-icons-round">settings</span>
-            </button>
             <button class="close-btn" onclick="pywebview.api.close_window()">×</button>
         </div>
+        
+        <!-- Settings Button Outside Drag Area -->
+        <button class="settings-btn" onclick="openSettings()">
+            <span class="material-icons-round">settings</span>
+        </button>
 
         <!-- Options View -->
         <div id="options-view" class="view-container">
