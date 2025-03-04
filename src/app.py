@@ -80,9 +80,7 @@ class Application:
             js_api=self,
             width=800,
             height=600,
-            resizable=True,
-            frameless=True,
-            easy_drag=True
+            resizable=True
         )
         return True
         

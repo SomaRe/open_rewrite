@@ -1,6 +1,8 @@
 import sys
 import webview
+import os
 from src.app import Application
+from src.utils.resource_path import resource_path
 
 def main():
     app = Application()
