@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Open Rewrite</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
-    <link rel="stylesheet" href="../static/css/styles.css">
+    <link rel="stylesheet" href="static/css/styles.css">
 </head>
 <body>
     <div class="app-container">
@@ -14,7 +14,7 @@
             <div class="drag-handle"></div>
             <button class="close-btn" onclick="pywebview.api.close_window()">×</button>
         </div>
-        
+
         <!-- Options View -->
         <div id="options-view" class="view-container">
             <div class="tones-section">
@@ -22,16 +22,16 @@
                     <!-- Tones will be added dynamically -->
                 </div>
             </div>
-            
+
             <hr class="divider">
-            
+
             <div class="formats-section">
                 <div class="formats-container" id="formats-container">
                     <!-- Formats will be added dynamically -->
                 </div>
             </div>
         </div>
-        
+
         <!-- Result View -->
         <div id="result-view" class="view-container hidden">
             <div class="result-header">
@@ -40,14 +40,14 @@
                     <span class="material-icons-round">arrow_back</span>
                 </button>
             </div>
-            
+
             <hr class="divider">
-            
+
             <div class="result-content">
                 <div id="loading-indicator" class="loader hidden"></div>
                 <div id="result-text" class="result-text"></div>
             </div>
-            
+
             <div class="action-buttons">
                 <button class="action-btn" onclick="copyResult()">
                     <span class="material-icons-round">content_copy</span> Copy
@@ -58,7 +58,7 @@
             </div>
         </div>
     </div>
-    
-    <script src="../static/js/app.js"></script>
+
+    <script src="static/js/app.js"></script>
 </body>
 </html>
