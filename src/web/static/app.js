@@ -16,7 +16,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Load options from settings
 function loadOptions() {
+    console.log('Attempting to get settings');
     pywebview.api.get_settings().then(settings => {
+        console.log('Settings received:', settings);
+        
         // Load tones
         const tonesContainer = document.getElementById('tones-container');
         tonesContainer.innerHTML = '';
@@ -34,6 +37,8 @@ function loadOptions() {
             const button = createOptionButton(name, data.icon, 'formats');
             formatsContainer.appendChild(button);
         });
+    }).catch(error => {
+        console.error('Error getting settings:', error);
     });
 }
 
