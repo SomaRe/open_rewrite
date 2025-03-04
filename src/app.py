@@ -12,6 +12,22 @@ class WebViewAPI:
         self.settings_manager = settings_manager
         self.openai_manager = openai_manager
         self.clipboard_handler = clipboard_handler
+        self.settings_window = None
+
+    def create_settings_window(self):
+        """Creates and shows the settings window."""
+        html_path = resource_path(os.path.join('src', 'ui', 'settings.html'))
+        if self.settings_window is None:
+            self.settings_window = webview.create_window(
+                "Settings",
+                html_path,
+                width=800,  
+                height=600,
+                on_top=True
+            )
+            self.settings_window.events.closed += self.on_settings_window_closed
+        else:
+            self.settings_window.show()
 
     def get_settings(self):
         """Get application settings"""
@@ -76,7 +92,6 @@ class Application:
             self.openai_manager,
             self.clipboard_handler
         )
-        self.settings_window = None
 
     def initialize(self):
         # Create window
@@ -87,8 +102,8 @@ class Application:
             'Open Rewrite',
             html_path,
             js_api=self.web_api,  # Use the API instance
-            width=600,
-            height=800,
+            width=400,
+            height=600,
             frameless=True,
             easy_drag=True,
         )
@@ -107,21 +122,6 @@ class Application:
             if webview.windows:
                 webview.windows[0].show()
                 webview.windows[0].evaluate_js(f"showText({repr(text)})")
-
-    def create_settings_window(self):
-        """Creates and shows the settings window."""
-        if self.settings_window is None:  # Only create one settings window
-            self.settings_window = webview.create_window(
-                "Settings",
-                "static/settings.html",  # Or wherever your settings HTML is
-                width=800,  # Adjust as needed
-                height=600, # Adjust as needed
-                resizable=False,
-                on_top=True
-            )
-            self.settings_window.events.closed += self.on_settings_window_closed
-        else:
-            self.settings_window.show() # If it exists, just show it
 
     def on_settings_window_closed(self):
         """Handles the settings window closing event."""

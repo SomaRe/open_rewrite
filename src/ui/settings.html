@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Rewrite - Settings</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link rel="stylesheet" href="static/styles.css">
+    <style>
+        .settings-container {
+            padding: 20px;
+        }
+        .setting-group {
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .setting-label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .setting-input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background-color: var(--surface-color);
+            color: var(--text-color);
+        }
+
+        .setting-textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background-color: var(--surface-color);
+            color: var(--text-color);
+            resize: vertical;
+        }
+        .action-buttons {
+            margin-top: 20px;
+            text-align: right;
+        }
+
+        .tone_form, .format_form {
+            margin-top: 15px;
+        }
+        .tone_form input, .format_form textarea {
+            margin-bottom: 10px;
+            padding: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Title Bar -->
+        <div class="title-bar">
+            <div class="drag-handle"></div>
+            <button class="close-btn" onclick="pywebview.api.close_window()">×</button>
+        </div>
+
+        <!-- Settings Content -->
+        <div class="settings-container">
+            <h2>Settings</h2>
+            <!-- OpenAI Settings -->
+            <div class="setting-group">
+                <h3>OpenAI</h3>
+                <div class="setting-item">
+                    <label class="setting-label" for="api_key">API Key:</label>
+                    <input type="text" id="api_key" class="setting-input" placeholder="Enter your OpenAI API key">
+                </div>
+                <div class="setting-item">
+                    <label class="setting-label" for="base_url">Base URL:</label>
+                    <input type="text" id="base_url" class="setting-input" placeholder="https://api.openai.com/v1/">
+                </div>
+                <div class="setting-item">
+                    <label class="setting-label" for="model">Model:</label>
+                    <input type="text" id="model" class="setting-input" placeholder="gpt-4o-mini">
+                </div>
+            </div>
+
+            <!-- System Message Settings -->
+            <div class="setting-group">
+                <h3>System Message</h3>
+                <label class="setting-label" for="system_message">System Message:</label>
+                <textarea id="system_message" class="setting-textarea" rows="4" placeholder="You are a helpful tool called Open Rewrite..."></textarea>
+            </div>
+
+            <!-- Tones Settings -->
+            <div class="setting-group">
+                <h3>Tones</h3>
+                <div id="tones-list">
+                    <!-- Tones will be loaded here -->
+                </div>
+
+                <button onclick="show_new_tone_form()">Add Tone</button>
+                <div id="new_tone_form" class="tone_form hidden">
+                    <h4>Add New Tone:</h4>
+                    <input type="text" id="new_tone_name" placeholder="Name">
+                    <input type="text" id="new_tone_icon" placeholder="Icon (Material Icons Round Name)">
+                    <textarea id="new_tone_prompt" placeholder="Prompt"></textarea>
+                    <button onclick="add_new_tone()">Save Tone</button>
+                    <button onclick="hide_new_tone_form()">Cancel</button>
+
+                </div>
+            </div>
+
+             <!-- Format Settings -->
+            <div class="setting-group">
+                <h3>Formats</h3>
+                <div id="formats-list">
+                    <!-- Formats will be loaded here -->
+                </div>
+
+                <button onclick="show_new_format_form()">Add Format</button>
+                <div id="new_format_form" class="format_form hidden">
+                    <h4>Add New Format:</h4>
+                    <input type="text" id="new_format_name" placeholder="Name">
+                    <input type="text" id="new_format_icon" placeholder="Icon (Material Icons Round Name)">
+                    <textarea id="new_format_prompt" placeholder="Prompt"></textarea>
+                    <button onclick="add_new_format()">Save Format</button>
+                    <button onclick="hide_new_format_form()">Cancel</button>
+
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="action-btn" onclick="saveSettings()">Save</button>
+                <button class="action-btn" onclick="resetToDefaults()">Reset to Defaults</button>
+            </div>
+        </div>
+    </div>
+    <script src="static/settings.js"></script>
+</body>
+</html>
