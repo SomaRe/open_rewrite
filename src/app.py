@@ -29,13 +29,24 @@ class Application:
             resizable=True,
             frameless=True,
             easy_drag=True,
-            hidden=True
+            hidden=True,
         )
-        
+
+        # Define the js_api explicitly
+        js_api = {
+            'rewrite_text': self.rewrite_text,
+            'copy_to_clipboard': self.copy_to_clipboard,
+            'replace_text': self.replace_text,
+            'show_settings': self.show_settings,
+            'get_settings': self.get_settings,
+            'save_settings': self.save_settings,
+            'reset_to_defaults': self.reset_to_defaults,
+            'close_window': self.close_window
+        }
+
         # Setup connections
         self.hotkey.connect(self.on_hotkey_activated)
         self.clipboard_handler.register_callback(self.on_text_copied)
-        
     def on_hotkey_activated(self):
         """Handle global hotkey activation"""
         self.clipboard_handler.get_highlighted_text()
@@ -77,7 +88,7 @@ class Application:
         settings_window = webview.create_window(
             'Settings - Open Rewrite',
             html_path,
-            js_api=self,
+            js_api=js_api,
             width=800,
             height=600,
             resizable=True
