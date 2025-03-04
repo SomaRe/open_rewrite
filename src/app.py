@@ -19,10 +19,10 @@ class Application:
         
     def initialize(self):
         # Create window
-        html_path = resource_path(os.path.join('src', 'web', 'templates', 'index.html'))
+        html_path = resource_path(os.path.join('src', 'web', 'index.html'))
         self.window = webview.create_window(
-            'Open Rewrite', 
-            html_path, 
+            'Open Rewrite',
+            html_path,
             js_api=self,
             width=600, 
             height=800,
