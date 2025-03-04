@@ -4,7 +4,14 @@ let currentResult = '';
 
 // Initialize the app
 document.addEventListener('DOMContentLoaded', () => {
-    loadOptions();
+    function checkPyWebView() {
+        if (typeof pywebview !== 'undefined') {
+            loadOptions();
+        } else {
+            setTimeout(checkPyWebView, 50); // Check again after 50ms
+        }
+    }
+    checkPyWebView();
 });
 
 // Load options from settings
