@@ -59,6 +59,10 @@ class WebViewAPI:
         webview.windows[0].hide()
         return True
 
+    def open_settings_window(self):
+        """Opens the settings window."""
+        self.create_settings_window()
+
 class Application:
     def __init__(self):
         self.settings_manager = SettingsManager()
@@ -92,14 +96,12 @@ class Application:
         # Setup connections
         self.hotkey.connect(self.on_hotkey_activated)
         self.clipboard_handler.register_callback(self.on_text_copied)
-        webview.expose(self.web_api)
-        self.web_api.app = self
 
     def on_hotkey_activated(self):
         """Handle global hotkey activation"""
         self.clipboard_handler.get_highlighted_text()
         
-    def on_text_copied(self, text):
+    def on_text_copied(self, self, text):
         """Handle copied text"""
         if text.strip():  # Only show if text isn't empty
             if webview.windows:
