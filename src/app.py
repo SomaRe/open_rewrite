@@ -101,7 +101,7 @@ class Application:
         """Handle global hotkey activation"""
         self.clipboard_handler.get_highlighted_text()
         
-    def on_text_copied(self, self, text):
+    def on_text_copied(self, text):
         """Handle copied text"""
         if text.strip():  # Only show if text isn't empty
             if webview.windows:
