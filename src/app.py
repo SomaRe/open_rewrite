@@ -75,7 +75,7 @@ class Application:
 
     def initialize(self):
         # Create window
-        html_path = resource_path(os.path.join('src', 'web', 'index.html'))
+        html_path = resource_path(os.path.join('src', 'ui', 'index.html'))
         
         # Create window with the API
         webview.create_window(

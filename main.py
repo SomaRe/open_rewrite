@@ -1,6 +1,4 @@
-import sys
 import webview
-import os
 from src.app import Application
 
 def main():
