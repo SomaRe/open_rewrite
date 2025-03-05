@@ -8,9 +8,9 @@ from src.utils.clipboard_handler import ClipboardHandler
 from src.utils.resource_path import resource_path
 
 class WebViewAPI:
-    def __init__(self, settings_manager, openai_manager, clipboard_handler):
+    def __init__(self, settings_manager, rewrite_manager, clipboard_handler):
         self.settings_manager = settings_manager
-        self.openai_manager = openai_manager
+        self.rewrite_manager = rewrite_manager
         self.clipboard_handler = clipboard_handler
         self.settings_window = None
 
@@ -44,7 +44,7 @@ class WebViewAPI:
         def on_error(error):
             webview.windows[0].evaluate_js(f"showError({repr(str(error))})")
             
-        self.openai_manager.generate_response(prompt, text, on_response, on_error)
+        self.rewrite_manager.rewrite_text(text, prompt, on_response, on_error)
         return True
 
     def copy_to_clipboard(self, text):
@@ -87,9 +87,10 @@ class Application:
         self.hotkey = GlobalHotKey()
         
         # Create the API instance
+        self.rewrite_manager = RewriteManager(self.openai_manager, self.clipboard_handler)
         self.web_api = WebViewAPI(
             self.settings_manager,
-            self.openai_manager,
+            self.rewrite_manager,
             self.clipboard_handler
         )
 
