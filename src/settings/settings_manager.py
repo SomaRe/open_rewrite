@@ -12,13 +12,14 @@ class SettingsManager:
         """Load settings from the JSON file."""
         try:
             with open(self.settings_file, 'r') as f:
+                print(f"Loading settings from {self.settings_file}")
                 settings = json.load(f)
                 # Update icon paths to use resource_path
                 for category in ['tones', 'formats']:
                     if category in settings:
                         for option in settings[category]:
                             icon_path = settings[category][option].get('icon', '')
-                            settings[category][option]['icon'] = os.path.join('src', 'resources', 'material_icons_round', icon_path)
+                            settings[category][option]['icon'] = icon_path
                 return settings
         except FileNotFoundError:
             # Provide default settings if the file doesn't exist
