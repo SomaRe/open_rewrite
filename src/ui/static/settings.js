@@ -66,22 +66,21 @@ function createToneElement(name, data) {
 
 function createFormatElement(name, data) {
     const formatDiv = document.createElement('div');
-    formatDiv.classList.add('format');
+    formatDiv.classList.add('mb-4', 'pb-4', 'border-b', 'border-gray-700');
     formatDiv.innerHTML = `
-        <div class="setting-item">
-            <label class="setting-label">Name:</label>
-            <input type="text" class="setting-input format-name" value="${name}">
+        <div class="mb-2">
+            <label class="block mb-1 font-medium">Name:</label>
+            <input type="text" class="w-full p-2 bg-gray-800 border border-gray-700 rounded format-name" value="${name}">
         </div>
-        <div class="setting-item">
-            <label class="setting-label">Icon:</label>
-            <input type="text" class="setting-input format-icon" value="${data.icon}">
+        <div class="mb-2">
+            <label class="block mb-1 font-medium">Icon:</label>
+            <input type="text" class="w-full p-2 bg-gray-800 border border-gray-700 rounded format-icon" value="${data.icon}">
         </div>
-        <div class="setting-item">
-            <label class="setting-label">Prompt:</label>
-            <textarea class="setting-textarea format-prompt">${data.prompt}</textarea>
+        <div class="mb-2">
+            <label class="block mb-1 font-medium">Prompt:</label>
+            <textarea class="w-full p-2 bg-gray-800 border border-gray-700 rounded format-prompt">${data.prompt}</textarea>
         </div>
-        <button class="action-btn" onclick='deleteFormat("${name}")'>Delete</button>
-        <hr class="divider">
+        <button class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded" onclick='deleteFormat("${name}")'>Delete</button>
     `;
     return formatDiv;
 }

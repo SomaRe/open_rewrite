@@ -49,10 +49,10 @@ function loadOptions() {
 // Create an option button
 function createOptionButton(name, icon, category) {
     const button = document.createElement('button');
-    button.className = 'option-btn';
+    button.className = 'flex flex-col items-center justify-center p-2 bg-gray-800 border border-gray-700 rounded-lg hover:bg-gray-700 transition-colors';
     button.innerHTML = `
-        <span class="material-icons-round option-icon">${icon}</span>
-        <span class="option-text">${name}</span>
+        <span class="material-icons-round text-2xl mb-1">${icon}</span>
+        <span class="text-sm text-center">${name}</span>
     `;
     
     button.addEventListener('click', () => {

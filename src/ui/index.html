@@ -5,63 +5,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Open Rewrite</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
-    <link rel="stylesheet" href="static/styles.css">
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
 </head>
-<body>
-    <div class="app-container">
+<body class="bg-gray-900 text-white">
+    <div class="container mx-auto p-4">
         <!-- Title Bar -->
-        <div class="title-bar pywebview-drag-region">
-            <div class="empty-space"></div>
-            <div class="drag-handle"></div>
-            <div class="close-btn-container">
-                <button class="close-btn" onclick="pywebview.api.close_window()">×</button>
+        <div class="flex items-center justify-between pywebview-drag-region">
+            <div class="flex-grow"></div>
+            <!-- Drag Handle -->
+            <div class="pywebview-drag-region flex items-center justify-center cursor-grab h-full w-4 mx-2">
+                <div class="bg-gray-700 h-6 w-0.5 rounded-full"></div>
             </div>
+            <button class="text-2xl hover:bg-gray-700 rounded-full px-2" onclick="pywebview.api.close_window()">×</button>
         </div>
-        
-        <!-- Settings Button Outside Drag Area -->
-        <button class="option-btn" onclick="openSettings()">
+
+        <!-- Settings Button -->
+        <button class="absolute top-2 left-2 p-2 rounded-full hover:bg-gray-800" onclick="openSettings()">
             <span class="material-icons-round">settings</span>
         </button>
 
         <!-- Options View -->
-        <div id="options-view" class="view-container">
-            <div class="tones-section">
-                <div class="tones-container" id="tones-container">
-                    <!-- Tones will be added dynamically -->
+        <div id="options-view" class="mt-12">
+            <div class="grid grid-cols-1 gap-8">
+                <div class="tones-section">
+                    <h2 class="text-2xl font-semibold mb-4 text-center">Tones</h2>
+                    <div class="tones-container grid grid-cols-3 gap-4" id="tones-container">
+                        <!-- Tones will be added dynamically -->
+                    </div>
                 </div>
-            </div>
 
-            <hr class="divider">
-
-            <div class="formats-section">
-                <div class="formats-container" id="formats-container">
-                    <!-- Formats will be added dynamically -->
+                <div class="formats-section">
+                    <h2 class="text-2xl font-semibold mb-4 text-center">Formats</h2>
+                    <div class="formats-container grid grid-cols-3 gap-4" id="formats-container">
+                        <!-- Formats will be added dynamically -->
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Result View -->
-        <div id="result-view" class="view-container hidden">
-            <div class="result-header">
-                <span id="result-title">Result</span>
-                <button class="back-btn" onclick="showOptionsView()">
+        <div id="result-view" class="hidden mt-12">
+            <div class="flex items-center justify-between mb-4">
+                <h2 id="result-title" class="text-2xl">Result</h2>
+                <button class="p-2 rounded-full hover:bg-gray-800" onclick="showOptionsView()">
                     <span class="material-icons-round">arrow_back</span>
                 </button>
             </div>
 
-            <hr class="divider">
-
             <div class="result-content">
-                <div id="loading-indicator" class="loader hidden"></div>
-                <div id="result-text" class="result-text"></div>
+                <div id="loading-indicator" class="hidden animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
+                <div id="result-text" class="text-lg"></div>
             </div>
 
-            <div class="action-buttons">
-                <button class="action-btn" onclick="copyResult()">
-                    <span class="material-icons-round">content_copy</span> Copy
+            <div class="mt-4 flex space-x-4">
+                <button class="flex items-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onclick="copyResult()">
+                    <span class="material-icons-round mr-2">content_copy</span> Copy
                 </button>
-                <button class="action-btn" onclick="replaceResult()">
-                    <span class="material-icons-round">drive_file_rename_outline</span> Replace
+                <button class="flex items-center bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" onclick="replaceResult()">
+                    <span class="material-icons-round mr-2">drive_file_rename_outline</span> Replace
                 </button>
             </div>
         </div>
