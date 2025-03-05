@@ -7,20 +7,21 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
 </head>
-<body class="bg-gray-900 text-white">
+<body class="bg-zinc-800 text-white">
     <div class="container mx-auto px-2">
         <!-- Title Bar -->
-        <div class="flex items-center justify-center pywebview-drag-region">
+        <div class="flex items-center justify-center pywebview-drag-region pt-1">
             <!-- Settings Button -->
-            <button class="p-2 rounded hover:bg-gray-800" onclick="openSettings()">
-                <span class="material-icons-round text-sm">settings</span>
+            <button class="p-2 rounded hover:bg-zinc-700" onclick="openSettings()">
+                <img class="w-6" src="static/material_icons_round/action/round_settings_black_48dp_white.png" alt="">
             </button>
             <!-- Drag Handle -->
             <div class="pywebview-drag-region flex items-start justify-center cursor-grab h-full w-full">
-                <div class="bg-gray-700 h-1 w-14 rounded"></div>
+                <div class="bg-zinc-700 h-1 w-14 rounded"></div>
             </div>
-            <button class="p-2 hover:bg-gray-700 rounded" onclick="pywebview.api.close_window()">
-                <span class="material-icons-round text-sm">close</span>
+            <!-- Close Button -->
+            <button class="p-2 hover:bg-zinc-700 rounded" onclick="pywebview.api.close_window()">
+                <img class="w-6" src="static/material_icons_round/navigation/round_close_black_48dp_white.png" alt="">
             </button>
         </div>
 
@@ -47,7 +48,7 @@
         <div id="result-view" class="hidden mt-12">
             <div class="flex items-center justify-between mb-4">
                 <h2 id="result-title" class="text-2xl">Result</h2>
-                <button class="p-2 rounded-full hover:bg-gray-800" onclick="showOptionsView()">
+                <button class="p-2 rounded-full hover:bg-zinc-700" onclick="showOptionsView()">
                     <span class="material-icons-round">arrow_back</span>
                 </button>
             </div>
@@ -70,4 +71,3 @@
 
     <script src="static/app.js"></script>
 </body>
-</html>

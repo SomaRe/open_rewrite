@@ -49,16 +49,16 @@ function loadOptions() {
 // Create an option button
 function createOptionButton(name, icon, category) {
     const button = document.createElement('button');
-    button.className = 'flex flex-col items-center justify-center p-2 bg-gray-800 border border-gray-700 rounded-lg hover:bg-gray-700 transition-colors';
+    button.className = 'flex flex-col items-center justify-center p-2 bg-zinc-800 border border-zinc-700 rounded-lg hover:bg-zinc-700 transition-colors';
     button.innerHTML = `
         <span class="material-icons-round text-xl mb-1">${icon}</span>
         <span class="text-sm text-center">${name}</span>
     `;
-    
+
     button.addEventListener('click', () => {
         selectOption(name, category);
     });
-    
+
     return button;
 }
 
