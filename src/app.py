@@ -101,7 +101,7 @@ class Application:
         webview.create_window(
             'Open Rewrite',
             html_path,
-            js_api=self.web_api,  # Use the API instance
+            js_api=self.web_api,
             width=400,
             height=600,
             frameless=True,
@@ -118,11 +118,11 @@ class Application:
         
     def on_text_copied(self, text):
         """Handle copied text"""
-        if text.strip():  # Only show if text isn't empty
+        if text.strip():
             if webview.windows:
                 webview.windows[0].show()
                 webview.windows[0].evaluate_js(f"showText({repr(text)})")
 
     def on_settings_window_closed(self):
         """Handles the settings window closing event."""
-        self.settings_window = None # Reset the window reference
+        self.settings_window = None
