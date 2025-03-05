@@ -23,7 +23,8 @@ class WebViewAPI:
                 html_path,
                 width=800,  
                 height=600,
-                on_top=True
+                on_top=True,
+                js_api=self
             )
             self.settings_window.events.closed += self.on_settings_window_closed
         else:
@@ -60,9 +61,18 @@ class WebViewAPI:
 
     def save_settings(self, settings):
         """Save application settings"""
-        self.settings_manager.set_all(settings)
-        self.openai_manager.load_settings()
-        return True
+        try:
+            # Validate required fields
+            if not all(key in settings for key in ['api_key', 'base_url', 'model', 'system_message', 'tones', 'formats']):
+                raise ValueError("Missing required settings fields")
+            
+            # Save all settings
+            self.settings_manager.set_all(settings)
+            self.openai_manager.load_settings()
+            return True
+        except Exception as e:
+            print(f"Error saving settings: {str(e)}")
+            return False
 
     def reset_to_defaults(self):
         """Reset settings to defaults"""

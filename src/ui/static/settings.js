@@ -45,10 +45,19 @@ function createToneElement(name, data) {
     const toneDiv = document.createElement('div');
     toneDiv.classList.add('tone');
     toneDiv.innerHTML = `
-        <div>${name}</div>
-        <div>(Icon: ${data.icon}, Prompt: ${data.prompt})</div>
-        <button onclick='editTone("${name}")'>Edit</button>
-        <button onclick='deleteTone("${name}")'>Delete</button>
+        <div class="setting-item">
+            <label class="setting-label">Name:</label>
+            <input type="text" class="setting-input tone-name" value="${name}">
+        </div>
+        <div class="setting-item">
+            <label class="setting-label">Icon:</label>
+            <input type="text" class="setting-input tone-icon" value="${data.icon}">
+        </div>
+        <div class="setting-item">
+            <label class="setting-label">Prompt:</label>
+            <textarea class="setting-textarea tone-prompt">${data.prompt}</textarea>
+        </div>
+        <button class="action-btn" onclick='deleteTone("${name}")'>Delete</button>
         <hr class="divider">
     `;
     return toneDiv;
@@ -58,10 +67,19 @@ function createFormatElement(name, data) {
     const formatDiv = document.createElement('div');
     formatDiv.classList.add('format');
     formatDiv.innerHTML = `
-        <div>${name}</div>
-        <div>(Icon: ${data.icon}, Prompt: ${data.prompt})</div>
-        <button onclick='editFormat("${name}")'>Edit</button>
-        <button onclick='deleteFormat("${name}")'>Delete</button>
+        <div class="setting-item">
+            <label class="setting-label">Name:</label>
+            <input type="text" class="setting-input format-name" value="${name}">
+        </div>
+        <div class="setting-item">
+            <label class="setting-label">Icon:</label>
+            <input type="text" class="setting-input format-icon" value="${data.icon}">
+        </div>
+        <div class="setting-item">
+            <label class="setting-label">Prompt:</label>
+            <textarea class="setting-textarea format-prompt">${data.prompt}</textarea>
+        </div>
+        <button class="action-btn" onclick='deleteFormat("${name}")'>Delete</button>
         <hr class="divider">
     `;
     return formatDiv;
@@ -125,22 +143,40 @@ function deleteFormat(name){
 }
 
 function saveSettings() {
-    // Retrieve settings from input fields
-    const apiKey = document.getElementById('api_key').value;
-    const baseUrl = document.getElementById('base_url').value;
-    const model = document.getElementById('model').value;
-    const systemMessage = document.getElementById('system_message').value;
-    // Retrieve tones
+    // Retrieve all settings from input fields
+    const settings = {
+        api_key: document.getElementById('api_key').value,
+        base_url: document.getElementById('base_url').value,
+        model: document.getElementById('model').value,
+        system_message: document.getElementById('system_message').value,
+        tones: {},
+        formats: {}
+    };
 
-    // Retrieve Formats
+    // Get all tones
+    const toneElements = document.querySelectorAll('#tones-list .tone');
+    toneElements.forEach(tone => {
+        const name = tone.querySelector('input.tone-name').value;
+        const icon = tone.querySelector('input.tone-icon').value;
+        const prompt = tone.querySelector('textarea.tone-prompt').value;
+        settings.tones[name] = { icon, prompt };
+    });
+
+    // Get all formats
+    const formatElements = document.querySelectorAll('#formats-list .format');
+    formatElements.forEach(format => {
+        const name = format.querySelector('input.format-name').value;
+        const icon = format.querySelector('input.format-icon').value;
+        const prompt = format.querySelector('textarea.format-prompt').value;
+        settings.formats[name] = { icon, prompt };
+    });
+
     // Call the Python API to save settings
-    pywebview.api.save_settings({ // call Python API with settings object.
-        api_key: apiKey,
-        base_url: baseUrl,
-        model: model,
-        system_message: systemMessage
-    }).then(()=>{
-        console.log("Saved ok");
+    pywebview.api.save_settings(settings).then(() => {
+        console.log("Settings saved successfully");
+        loadSettings(); // Reload to confirm changes
+    }).catch(error => {
+        console.error("Error saving settings:", error);
     });
 }
 
