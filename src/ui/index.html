@@ -10,17 +10,17 @@
 <body class="bg-gray-900 text-white">
     <div class="container mx-auto px-2">
         <!-- Title Bar -->
-        <div class="flex items-center justify-center pywebview-drag-region py-2">
+        <div class="flex items-center justify-center pywebview-drag-region">
             <!-- Settings Button -->
             <button class="p-2 rounded hover:bg-gray-800" onclick="openSettings()">
-                <span class="material-icons-round">settings</span>
+                <span class="material-icons-round text-sm">settings</span>
             </button>
             <!-- Drag Handle -->
             <div class="pywebview-drag-region flex items-start justify-center cursor-grab h-full w-full">
                 <div class="bg-gray-700 h-1 w-14 rounded"></div>
             </div>
             <button class="p-2 hover:bg-gray-700 rounded" onclick="pywebview.api.close_window()">
-                <span class="material-icons-round">close</span>
+                <span class="material-icons-round text-sm">close</span>
             </button>
         </div>
 
