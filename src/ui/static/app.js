@@ -53,7 +53,7 @@ function createOptionButton(name, icon, category) {
     const button = document.createElement('button');
     button.className = 'flex items-center w-full p-1 hover:bg-zinc-700 transition-colors text-left';
     button.innerHTML = `
-        <span class="material-icons-round text-lg mr-2">${icon}</span>
+        <img class="w-4 h-4 mr-2" src="static/material_icons_round/${icon}" alt="${name}">
         <span class="text-sm">${name}</span>
     `;
 

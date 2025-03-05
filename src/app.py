@@ -142,8 +142,8 @@ class Application:
             'Open Rewrite',
             html_path,
             js_api=self.web_api,
-            width=375,
-            height=500,
+            width=300,
+            height=400,
             frameless=True,
             easy_drag=True,
         )
