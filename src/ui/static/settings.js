@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function loadSettings() {
 
     pywebview.api.get_settings().then(settings => {
+        console.log("settings: ", settings)
         // Load OpenAI settings
         document.getElementById('api_key').value = settings.api_key || '';
         document.getElementById('base_url').value = settings.base_url || 'https://api.openai.com/v1/';

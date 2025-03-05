@@ -68,15 +68,15 @@
                 <h3>OpenAI</h3>
                 <div class="setting-item">
                     <label class="setting-label" for="api_key">API Key:</label>
-                    <input type="text" id="api_key" class="setting-input" placeholder="Enter your OpenAI API key">
+                    <input type="text" id="api_key" class="setting-input">
                 </div>
                 <div class="setting-item">
                     <label class="setting-label" for="base_url">Base URL:</label>
-                    <input type="text" id="base_url" class="setting-input" placeholder="https://api.openai.com/v1/">
+                    <input type="text" id="base_url" class="setting-input">
                 </div>
                 <div class="setting-item">
                     <label class="setting-label" for="model">Model:</label>
-                    <input type="text" id="model" class="setting-input" placeholder="gpt-4o-mini">
+                    <input type="text" id="model" class="setting-input">
                 </div>
             </div>
 
@@ -84,7 +84,7 @@
             <div class="setting-group">
                 <h3>System Message</h3>
                 <label class="setting-label" for="system_message">System Message:</label>
-                <textarea id="system_message" class="setting-textarea" rows="4" placeholder="You are a helpful tool called Open Rewrite..."></textarea>
+                <textarea id="system_message" class="setting-textarea" rows="4"></textarea>
             </div>
 
             <!-- Tones Settings -->
@@ -97,9 +97,9 @@
                 <button onclick="show_new_tone_form()">Add Tone</button>
                 <div id="new_tone_form" class="tone_form hidden">
                     <h4>Add New Tone:</h4>
-                    <input type="text" id="new_tone_name" placeholder="Name">
-                    <input type="text" id="new_tone_icon" placeholder="Icon (Material Icons Round Name)">
-                    <textarea id="new_tone_prompt" placeholder="Prompt"></textarea>
+                    <input type="text" id="new_tone_name">
+                    <input type="text" id="new_tone_icon">
+                    <textarea id="new_tone_prompt"></textarea>
                     <button onclick="add_new_tone()">Save Tone</button>
                     <button onclick="hide_new_tone_form()">Cancel</button>
 
@@ -116,9 +116,9 @@
                 <button onclick="show_new_format_form()">Add Format</button>
                 <div id="new_format_form" class="format_form hidden">
                     <h4>Add New Format:</h4>
-                    <input type="text" id="new_format_name" placeholder="Name">
-                    <input type="text" id="new_format_icon" placeholder="Icon (Material Icons Round Name)">
-                    <textarea id="new_format_prompt" placeholder="Prompt"></textarea>
+                    <input type="text" id="new_format_name">
+                    <input type="text" id="new_format_icon">
+                    <textarea id="new_format_prompt"></textarea>
                     <button onclick="add_new_format()">Save Format</button>
                     <button onclick="hide_new_format_form()">Cancel</button>
 
