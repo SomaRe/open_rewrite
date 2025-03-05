@@ -23,23 +23,25 @@ function loadOptions() {
     console.log('Attempting to get settings');
     pywebview.api.get_settings().then(settings => {
         console.log('Settings received:', settings);
-        
+
+        const optionsContainer = document.getElementById('options-container');
+        optionsContainer.innerHTML = '';
+
         // Load tones
-        const tonesContainer = document.getElementById('tones-container');
-        tonesContainer.innerHTML = '';
-        
         Object.entries(settings.tones).forEach(([name, data]) => {
             const button = createOptionButton(name, data.icon, 'tones');
-            tonesContainer.appendChild(button);
+            optionsContainer.appendChild(button);
         });
-        
+
+        // Add separator
+        const separator = document.createElement('hr');
+        separator.className = 'border-zinc-700 my-2';
+        optionsContainer.appendChild(separator);
+
         // Load formats
-        const formatsContainer = document.getElementById('formats-container');
-        formatsContainer.innerHTML = '';
-        
         Object.entries(settings.formats).forEach(([name, data]) => {
             const button = createOptionButton(name, data.icon, 'formats');
-            formatsContainer.appendChild(button);
+            optionsContainer.appendChild(button);
         });
     }).catch(error => {
         console.error('Error getting settings:', error);
@@ -49,10 +51,10 @@ function loadOptions() {
 // Create an option button
 function createOptionButton(name, icon, category) {
     const button = document.createElement('button');
-    button.className = 'flex flex-col items-center justify-center p-2 bg-zinc-800 border border-zinc-700 rounded-lg hover:bg-zinc-700 transition-colors';
+    button.className = 'flex items-center w-full p-1 hover:bg-zinc-700 transition-colors text-left';
     button.innerHTML = `
-        <span class="material-icons-round text-xl mb-1">${icon}</span>
-        <span class="text-sm text-center">${name}</span>
+        <span class="material-icons-round text-lg mr-2">${icon}</span>
+        <span class="text-sm">${name}</span>
     `;
 
     button.addEventListener('click', () => {
