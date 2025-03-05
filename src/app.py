@@ -7,28 +7,57 @@ from src.utils.global_hotkey import GlobalHotKey
 from src.utils.clipboard_handler import ClipboardHandler
 from src.utils.resource_path import resource_path
 
+class SettingsAPI:
+    def __init__(self, settings_manager):
+        self.settings_manager = settings_manager
+
+    def get_settings(self):
+        return self.settings_manager.get_all()
+
+    def save_settings(self, settings):
+        try:
+            if not all(key in settings for key in ['api_key', 'base_url', 'model', 'system_message', 'tones', 'formats']):
+                raise ValueError("Missing required settings fields")
+            
+            self.settings_manager.set_all(settings)
+            return True
+        except Exception as e:
+            print(f"Error saving settings: {str(e)}")
+            return False
+
+    def reset_to_defaults(self):
+        self.settings_manager.reset_to_defaults()
+        return True
+
+    def close_window(self):
+        webview.windows[1].hide()
+        return True
+
 class WebViewAPI:
     def __init__(self, settings_manager, rewrite_manager, clipboard_handler):
         self.settings_manager = settings_manager
         self.rewrite_manager = rewrite_manager
         self.clipboard_handler = clipboard_handler
-        self.settings_window = None
+        self.openai_manager = OpenAIManager(self.settings_manager)
+        self.settings_api = SettingsAPI(settings_manager)
 
     def create_settings_window(self):
         """Creates and shows the settings window."""
         html_path = resource_path(os.path.join('src', 'ui', 'settings.html'))
-        if self.settings_window is None:
-            self.settings_window = webview.create_window(
+        existing_settings_windows = [w for w in webview.windows if w.title == "Settings"]
+        
+        if not existing_settings_windows:
+            settings_window = webview.create_window(
                 "Settings",
                 html_path,
-                width=800,  
+                width=800,
                 height=600,
                 on_top=True,
-                js_api=self
+                js_api=self.settings_api
             )
-            self.settings_window.events.closed += self.on_settings_window_closed
+            settings_window.show()
         else:
-            self.settings_window.show()
+            existing_settings_windows[0].show()
 
     def get_settings(self):
         """Get application settings"""
@@ -134,6 +163,3 @@ class Application:
                 webview.windows[0].show()
                 webview.windows[0].evaluate_js(f"showText({repr(text)})")
 
-    def on_settings_window_closed(self):
-        """Handles the settings window closing event."""
-        self.settings_window = None

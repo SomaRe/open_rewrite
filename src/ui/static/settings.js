@@ -175,14 +175,16 @@ function saveSettings() {
     // Call the Python API to save settings
     pywebview.api.save_settings(settings).then(() => {
         console.log("Settings saved successfully");
-        loadSettings(); // Reload to confirm changes
+        window.location.reload();
     }).catch(error => {
         console.error("Error saving settings:", error);
     });
 }
 
 function resetToDefaults() {
-    pywebview.api.reset_to_defaults();
-    // After reset, reload the settings in the HTML
-    loadSettings();
+    pywebview.api.reset_to_defaults().then(() => {
+        window.location.reload(); 
+    }).catch(error => {
+        console.error("Error resetting to defaults:", error);
+    });
 }
