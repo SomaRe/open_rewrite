@@ -56,25 +56,25 @@
                     <!-- Tones will be loaded here -->
                 </div>
 
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4" onclick="show_new_tone_form()">Add Tone</button>
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4" onclick="showNewToneForm()">Add Tone</button>
 
-                <div id="new_tone_form" class="mt-4 space-y-2 hidden">
+                <div id="new-tone-form" class="mt-4 space-y-2 hidden">
                     <h4 class="text-lg font-semibold mb-2">Add New Tone</h4>
                     <div>
-                        <label class="block text-sm font-medium mb-1" for="new_tone_name">Name:</label>
-                        <input type="text" id="new_tone_name" class="w-full p-2 bg-zinc-900 border border-zinc-700 rounded" placeholder="Name">
+                        <label class="block text-sm font-medium mb-1" for="new-tone-name">Name:</label>
+                        <input type="text" id="new-tone-name" class="w-full p-2 bg-zinc-900 border border-zinc-700 rounded" placeholder="Name">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-1" for="new_tone_icon">Icon:</label>
-                        <input type="text" id="new_tone_icon" class="w-full p-2 bg-zinc-900 border border-zinc-700 rounded" placeholder="Icon URL or name">
+                        <label class="block text-sm font-medium mb-1" for="new-tone-icon">Icon:</label>
+                        <input type="text" id="new-tone-icon" class="w-full p-2 bg-zinc-900 border border-zinc-700 rounded" placeholder="Icon URL or name">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-1" for="new_tone_prompt">Prompt:</label>
-                        <textarea id="new_tone_prompt" class="w-full p-2 bg-zinc-900 border border-zinc-700 rounded" placeholder="Prompt"></textarea>
+                        <label class="block text-sm font-medium mb-1" for="new-tone-prompt">Prompt:</label>
+                        <textarea id="new-tone-prompt" class="w-full p-2 bg-zinc-900 border border-zinc-700 rounded" placeholder="Prompt"></textarea>
                     </div>
                     <div class="flex justify-end space-x-2">
-                        <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" onclick="add_new_tone()">Save</button>
-                        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onclick="hide_new_tone_form()">Cancel</button>
+                        <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" onclick="addNewTone()">Save</button>
+                        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onclick="hideNewToneForm()">Cancel</button>
                     </div>
                 </div>
             </div>
@@ -86,25 +86,25 @@
                     <!-- Formats will be loaded here -->
                 </div>
 
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4" onclick="show_new_format_form()">Add Format</button>
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4" onclick="showNewFormatForm()">Add Format</button>
 
-                <div id="new_format_form" class="mt-4 space-y-2 hidden">
+                <div id="new-format-form" class="mt-4 space-y-2 hidden">
                     <h4 class="text-lg font-semibold mb-2">Add New Format</h4>
                     <div>
-                        <label class="block text-sm font-medium mb-1" for="new_format_name">Name:</label>
-                        <input type="text" id="new_format_name" class="w-full p-2 bg-zinc-900 border border-zinc-700 rounded" placeholder="Name">
+                        <label class="block text-sm font-medium mb-1" for="new-format-name">Name:</label>
+                        <input type="text" id="new-format-name" class="w-full p-2 bg-zinc-900 border border-zinc-700 rounded" placeholder="Name">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-1" for="new_format_icon">Icon:</label>
-                        <input type="text" id="new_format_icon" class="w-full p-2 bg-zinc-900 border border-zinc-700 rounded" placeholder="Icon URL or name">
+                        <label class="block text-sm font-medium mb-1" for="new-format-icon">Icon:</label>
+                        <input type="text" id="new-format-icon" class="w-full p-2 bg-zinc-900 border border-zinc-700 rounded" placeholder="Icon URL or name">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-1" for="new_format_prompt">Prompt:</label>
-                        <textarea id="new_format_prompt" class="w-full p-2 bg-zinc-900 border border-zinc-700 rounded" placeholder="Prompt"></textarea>
+                        <label class="block text-sm font-medium mb-1" for="new-format-prompt">Prompt:</label>
+                        <textarea id="new-format-prompt" class="w-full p-2 bg-zinc-900 border border-zinc-700 rounded" placeholder="Prompt"></textarea>
                     </div>
                     <div class="flex justify-end space-x-2">
-                        <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" onclick="add_new_format()">Save</button>
-                        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onclick="hide_new_format_form()">Cancel</button>
+                        <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" onclick="addNewFormat()">Save</button>
+                        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onclick="hideNewFormatForm()">Cancel</button>
                     </div>
                 </div>
             </div>

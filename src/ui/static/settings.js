@@ -11,9 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function loadSettings() {
-
     pywebview.api.get_settings().then(settings => {
-        console.log("settings: ", settings)
         // Load OpenAI settings
         document.getElementById('api_key').value = settings.api_key || '';
         document.getElementById('base_url').value = settings.base_url || 'https://api.openai.com/v1';
@@ -52,17 +50,17 @@ function saveSettings() {
 
     // Save tones
     document.querySelectorAll('.tone').forEach(toneElement => {
-        const name = toneElement.querySelector('.tone-name').value;
-        const icon = toneElement.querySelector('.tone-icon').value;
-        const prompt = toneElement.querySelector('.tone-prompt').value;
+        const name = toneElement.dataset.name;
+        const icon = toneElement.querySelector('.tone-icon').src;
+        const prompt = toneElement.querySelector('.tone-prompt').textContent;
         settings.tones[name] = { icon: icon, prompt: prompt };
     });
     
     // Save formats
     document.querySelectorAll('.format').forEach(formatElement => {
-        const name = formatElement.querySelector('.format-name').value;
-        const icon = formatElement.querySelector('.format-icon').value;
-        const prompt = formatElement.querySelector('.format-prompt').value;
+        const name = formatElement.dataset.name;
+        const icon = formatElement.querySelector('.format-icon').src;
+        const prompt = formatElement.querySelector('.format-prompt').textContent;
         settings.formats[name] = { icon: icon, prompt: prompt };
     });
 
@@ -73,25 +71,28 @@ function saveSettings() {
         console.error("Error saving settings:", error);
     });
 }
+
 function createToneElement(name, data) {
     const toneDiv = document.createElement('div');
     toneDiv.classList.add('mb-4', 'pb-4', 'border-b', 'border-zinc-700', 'tone');
+    toneDiv.dataset.name = name;
     toneDiv.innerHTML = `
-        <div class="mb-2">
-            <label class="block mb-1 font-medium">Name:</label>
-            <input type="text" class="w-full p-2 bg-zinc-900 border border-zinc-700 rounded tone-name" value="${name}">
-        </div>
-        <div class="mb-2">
-            <label class="block mb-1 font-medium">Icon:</label>
-            <input type="text" class="w-full p-2 bg-zinc-900 border border-zinc-700 rounded tone-icon" value="${data.icon}">
+        <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center">
+                <img class="w-6 h-6 mr-2 tone-icon" src="${data.icon}" alt="${name}">
+                <span class="font-medium tone-name">${name}</span>
+            </div>
+            <div>
+                <button class="edit-button bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onclick="editTone(this.parentNode.parentNode.parentNode)">Edit</button>
+                <button class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded" onclick='deleteTone("${name}")'>
+                    <img class="w-6" src="static/material_icons_round/content/round_clear_black_48dp_white.png" alt="Delete">
+                </button>
+            </div>
         </div>
         <div class="mb-2">
             <label class="block mb-1 font-medium">Prompt:</label>
-            <textarea class="w-full p-2 bg-zinc-900 border border-zinc-700 rounded tone-prompt">${data.prompt}</textarea>
+            <div class="w-full p-2 bg-zinc-900 border border-zinc-700 rounded tone-prompt">${data.prompt}</div>
         </div>
-        <button class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded" onclick='deleteTone("${name}")'>
-            <img class="w-6" src="static/material_icons_round/content/round_clear_black_48dp_white.png" alt="Delete">
-        </button>
     `;
     return toneDiv;
 }
@@ -99,49 +100,51 @@ function createToneElement(name, data) {
 function createFormatElement(name, data) {
     const formatDiv = document.createElement('div');
     formatDiv.classList.add('mb-4', 'pb-4', 'border-b', 'border-zinc-700', 'format');
+    formatDiv.dataset.name = name;
     formatDiv.innerHTML = `
-        <div class="mb-2">
-            <label class="block mb-1 font-medium">Name:</label>
-            <input type="text" class="w-full p-2 bg-zinc-900 border border-zinc-700 rounded format-name" value="${name}">
-        </div>
-        <div class="mb-2">
-            <label class="block mb-1 font-medium">Icon:</label>
-            <input type="text" class="w-full p-2 bg-zinc-900 border border-zinc-700 rounded format-icon" value="${data.icon}">
+        <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center">
+                <img class="w-6 h-6 mr-2 format-icon" src="${data.icon}" alt="${name}">
+                <span class="font-medium format-name">${name}</span>
+            </div>
+            <div>
+                <button class="edit-button bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onclick="editFormat(this.parentNode.parentNode.parentNode)">Edit</button>
+                <button class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded" onclick='deleteFormat("${name}")'>
+                    <img class="w-6" src="static/material_icons_round/content/round_clear_black_48dp_white.png" alt="Delete">
+                </button>
+            </div>
         </div>
         <div class="mb-2">
             <label class="block mb-1 font-medium">Prompt:</label>
-            <textarea class="w-full p-2 bg-zinc-900 border border-zinc-700 rounded format-prompt">${data.prompt}</textarea>
+            <div class="w-full p-2 bg-zinc-900 border border-zinc-700 rounded format-prompt">${data.prompt}</div>
         </div>
-        <button class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded" onclick='deleteFormat("${name}")'>
-            <img class="w-6" src="static/material_icons_round/content/round_clear_black_48dp_white.png" alt="Delete">
-        </button>
     `;
     return formatDiv;
 }
 
 // Function to show the "add new Tone" form
-function show_new_tone_form() {
-    const form = document.getElementById('new_tone_form');
+function showNewToneForm() {
+    const form = document.getElementById('new-tone-form');
     form.classList.remove('hidden');  // remove `hidden` class
 }
 
 // Function to hide the "add new Tone" form
-function hide_new_tone_form() {
-    const form = document.getElementById('new_tone_form');
+function hideNewToneForm() {
+    const form = document.getElementById('new-tone-form');
     form.classList.add('hidden');  // and add `hidden` class back...hide.
 
     //clear fields
-    document.getElementById('new_tone_name').value   = "";
-    document.getElementById('new_tone_icon').value   = "";
-    document.getElementById('new_tone_prompt').value = "";
+    document.getElementById('new-tone-name').value   = "";
+    document.getElementById('new-tone-icon').value   = "";
+    document.getElementById('new-tone-prompt').value = "";
 
 }
 
 // Function to add a new tone
-function add_new_tone() {
-    const name = document.getElementById('new_tone_name').value;
-    const icon = document.getElementById('new_tone_icon').value;
-    const prompt = document.getElementById('new_tone_prompt').value;
+function addNewTone() {
+    const name = document.getElementById('new-tone-name').value;
+    const icon = document.getElementById('new-tone-icon').value;
+    const prompt = document.getElementById('new-tone-prompt').value;
 
     if (name && icon && prompt) {
         const newTone = { icon: icon, prompt: prompt };
@@ -149,14 +152,14 @@ function add_new_tone() {
         const tonesList = document.getElementById('tones-list');
         const toneDiv = createToneElement(name, newTone);
         tonesList.appendChild(toneDiv);
-        hide_new_tone_form();
+        hideNewToneForm();
     } else {
         alert('Please fill in all fields for the new tone.');
     }
 }
 
 //Edit a Tone
-function editTone(name){
+function editTone(toneElement){
     console.log("Edit a Tone");
 
 }
@@ -164,35 +167,34 @@ function editTone(name){
 // Function to delete a tone
 function deleteTone(name) {
     document.querySelectorAll('.tone').forEach(toneElement => {
-        const toneName = toneElement.querySelector('.tone-name').value;
-        if (toneName === name) {
+        if (toneElement.dataset.name === name) {
             toneElement.remove();
         }
     });
 }
 
 // Function to show the "add new Format" form
-function show_new_format_form() {
-    const form = document.getElementById('new_format_form');
+function showNewFormatForm() {
+    const form = document.getElementById('new-format-form');
     form.classList.remove('hidden');
 }
 
 // Function to hide the "add new Format" form
-function hide_new_format_form() {
-    const form = document.getElementById('new_format_form');
+function hideNewFormatForm() {
+    const form = document.getElementById('new-format-form');
     form.classList.add('hidden');
 
     // Clear fields
-    document.getElementById('new_format_name').value = "";
-    document.getElementById('new_format_icon').value = "";
-    document.getElementById('new_format_prompt').value = "";
+    document.getElementById('new-format-name').value = "";
+    document.getElementById('new-format-icon').value = "";
+    document.getElementById('new-format-prompt').value = "";
 }
 
 // Function to add a new format
-function add_new_format() {
-    const name = document.getElementById('new_format_name').value;
-    const icon = document.getElementById('new_format_icon').value;
-    const prompt = document.getElementById('new_format_prompt').value;
+function addNewFormat() {
+    const name = document.getElementById('new-format-name').value;
+    const icon = document.getElementById('new-format-icon').value;
+    const prompt = document.getElementById('new-format-prompt').value;
 
     if (name && icon && prompt) {
         const newFormat = { icon: icon, prompt: prompt };
@@ -201,7 +203,7 @@ function add_new_format() {
         const formatsList = document.getElementById('formats-list');
         const formatDiv = createFormatElement(name, newFormat);
         formatsList.appendChild(formatDiv);
-        hide_new_format_form();
+        hideNewFormatForm();
     } else {
         alert('Please fill in all fields for the new format.');
     }
@@ -210,8 +212,7 @@ function add_new_format() {
 // Function to delete a format
 function deleteFormat(name) {
     document.querySelectorAll('.format').forEach(formatElement => {
-        const formatName = formatElement.querySelector('.format-name').value;
-        if (formatName === name) {
+        if (formatElement.dataset.name === name) {
             formatElement.remove();
         }
     });
