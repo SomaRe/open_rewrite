@@ -1,9 +1,6 @@
 from pynput import keyboard
 import logging
 
-# Set up logging
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
-
 class GlobalHotKey:
     def __init__(self):
         logging.debug('GlobalHotKey.__init__ called')

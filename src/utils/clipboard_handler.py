@@ -4,9 +4,6 @@ import time
 import threading
 import logging
 
-# Set up logging
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
-
 class ClipboardHandler:
     def __init__(self):
         logging.debug('ClipboardHandler.__init__ called')

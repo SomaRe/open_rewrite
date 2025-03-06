@@ -15,8 +15,6 @@ from src.utils.global_hotkey import GlobalHotKey
 from src.utils.clipboard_handler import ClipboardHandler
 from src.utils.resource_path import resource_path
 
-# Set up logging
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message.s')
 
 class SettingsAPI:
     def __init__(self, settings_manager):

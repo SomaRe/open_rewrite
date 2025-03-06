@@ -1,8 +1,5 @@
 import logging
 
-# Set up logging
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
-
 class RewriteManager:
     def __init__(self, llm_manager, clipboard_handler):
         logging.debug('RewriteManager.__init__ called')
