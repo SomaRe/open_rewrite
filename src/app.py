@@ -68,7 +68,6 @@ class WebViewAPI:
                 html_path,
                 width=800,
                 height=600,
-                on_top=True,
                 js_api=self.settings_api,
                 frameless=True,
                 easy_drag=True
@@ -188,6 +187,7 @@ class Application:
             js_api=self.web_api,
             width=300,
             height=400,
+            on_top=True,
             frameless=True,
             easy_drag=True,
         )

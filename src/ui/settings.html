@@ -8,19 +8,19 @@
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
 </head>
 <body class="bg-zinc-800 text-white">
-    <div class="container mx-auto px-4 py-2">
-        <!-- Title Bar -->
-        <div class="flex items-center justify-center pywebview-drag-region pt-1">
-            <!-- Drag Handle -->
-            <div class="pywebview-drag-region flex items-start justify-center cursor-grab h-full w-full">
-                <div class="bg-zinc-700 h-1 w-14 rounded"></div>
-            </div>
-            <!-- Close Button -->
-            <button class="p-2 hover:bg-zinc-700 rounded" onclick="pywebview.api.close_window()">
-                <img class="w-6" src="static/material_icons_round/navigation/round_close_black_48dp_white.png" alt="Close">
-            </button>
+    <!-- Title Bar -->
+    <div class="bg-zinc-800 flex items-center justify-center pywebview-drag-region pt-1 fixed top-0 left-0 w-full">
+        <!-- Drag Handle -->
+        <div class="pywebview-drag-region flex items-start justify-center cursor-grab h-full w-full">
+            <div class="bg-zinc-700 h-1 w-14 rounded"></div>
         </div>
-
+        <!-- Close Button -->
+        <button class="p-2 hover:bg-zinc-700 rounded" onclick="pywebview.api.close_window()">
+            <img class="w-6" src="static/material_icons_round/navigation/round_close_black_48dp_white.png" alt="Close">
+        </button>
+    </div>
+    
+    <div class="container mx-auto px-4 py-8">
         <!-- Settings Content -->
         <div class="space-y-6 mt-2">
             <h2 class="text-2xl font-bold">Settings</h2>
