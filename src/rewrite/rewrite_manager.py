@@ -10,6 +10,10 @@ class RewriteManager:
 
     def rewrite_text(self, text, prompt, on_success, on_error):
         """Rewrite the text using the provided prompt"""
+        if text.strip() == '':
+            on_error('No text selected or found, please try again!')
+            return
+
         logging.debug(f'RewriteManager.rewrite_text called with text: {text}, prompt: {prompt}')
         api_key = self.settings_manager.get('api_key')
         base_url = self.settings_manager.get('base_url')
