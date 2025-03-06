@@ -1,4 +1,5 @@
 import os
+import time
 import webview
 import logging
 from src.settings.settings_manager import SettingsManager
@@ -70,7 +71,8 @@ class WebViewAPI:
                 height=600,
                 js_api=self.settings_api,
                 frameless=True,
-                easy_drag=True
+                easy_drag=True,
+                resizable=True
             )
             settings_window.show()
             logging.debug('WebViewAPI.create_settings_window: settings window created and shown')
@@ -116,8 +118,9 @@ class WebViewAPI:
     def replace_text(self, text):
         logging.debug(f'WebViewAPI.replace_text called with text: {text}')
         """Replace selected text with new text"""
-        self.clipboard_handler.replace_text(text)
         webview.windows[0].hide()
+        time.sleep(0.1)
+        self.clipboard_handler.replace_text(text)
         logging.debug('WebViewAPI.replace_text finished')
         return True
 
@@ -210,8 +213,8 @@ class Application:
         """Handle copied text"""
         if text.strip():
             if webview.windows:
-                webview.windows[0].show()
                 webview.windows[0].evaluate_js(f"showText({repr(text)})")
+                webview.windows[0].show()
                 logging.debug('Application.on_text_copied: main window shown and text evaluated')
         logging.debug('Application.on_text_copied finished')
 

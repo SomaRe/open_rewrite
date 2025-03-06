@@ -6,7 +6,7 @@ class GlobalHotKey:
         logging.debug('GlobalHotKey.__init__ called')
         self.callbacks = []
         self.listener = keyboard.GlobalHotKeys({
-            '<alt>+r': self.on_activate
+            '<ctrl>+r': self.on_activate
         })
         self.listener.start()
         logging.debug('GlobalHotKey.__init__ finished')

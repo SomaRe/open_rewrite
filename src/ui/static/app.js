@@ -128,5 +128,6 @@ function copyResult() {
 function replaceResult() {
     if (currentResult) {
         pywebview.api.replace_text(currentResult);
+        showText("");
     }
 }
