@@ -15,7 +15,6 @@ class SettingsManager:
             with open(self.settings_file, 'r') as f:
                 settings = json.load(f)
                 logging.debug("Successfully loaded settings from file")
-                # Update icon paths to use resource_path
                 for category in ['tones', 'formats']:
                     if category in settings:
                         for option in settings[category]:
@@ -30,6 +29,11 @@ class SettingsManager:
         except json.JSONDecodeError:
             logging.error(f"Error decoding settings file, falling back to defaults.")
             return self.get_default_settings()
+
+    def reload(self):
+        """Reload settings from the file."""
+        logging.info(f"Reloading settings from {self.settings_file}")
+        self.settings = self.load_settings()
 
     def get(self, key, default=None):
         """Get a setting by key."""
@@ -63,6 +67,7 @@ class SettingsManager:
         try:
             with open(self.settings_file, 'w') as f:
                 json.dump(self.settings, f, indent=4)
+            self.reload()
             logging.debug("Settings saved successfully")
         except Exception as e:
             logging.error(f"Error saving settings: {str(e)}")

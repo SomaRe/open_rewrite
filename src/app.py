@@ -1,12 +1,5 @@
 import os
 import webview
-from src.settings.settings_manager import SettingsManager
-from src.llm.openai_manager import OpenAIManager
-from src.rewrite.rewrite_manager import RewriteManager
-from src.utils.global_hotkey import GlobalHotKey
-from src.utils.clipboard_handler import ClipboardHandler
-import os
-import webview
 import logging
 from src.settings.settings_manager import SettingsManager
 from src.llm.openai_manager import OpenAIManager
@@ -59,8 +52,8 @@ class WebViewAPI:
         self.settings_manager = settings_manager
         self.rewrite_manager = rewrite_manager
         self.clipboard_handler = clipboard_handler
-        self.openai_manager = OpenAIManager(self.settings_manager)
-        self.settings_api = SettingsAPI(settings_manager)
+        self.openai_manager = OpenAIManager()
+        self.settings_api = SettingsAPI(self.settings_manager)
         logging.debug('WebViewAPI.__init__ finished')
 
     def create_settings_window(self):
@@ -137,7 +130,6 @@ class WebViewAPI:
             
             # Save all settings
             self.settings_manager.set_all(settings)
-            self.openai_manager.load_settings()
             logging.debug('WebViewAPI.save_settings: settings saved successfully')
             return True
         except Exception as e:
@@ -148,7 +140,6 @@ class WebViewAPI:
         logging.debug('WebViewAPI.reset_to_defaults called')
         """Reset settings to defaults"""
         self.settings_manager.reset_to_defaults()
-        self.openai_manager.load_settings()
         logging.debug('WebViewAPI.reset_to_defaults finished')
         return True
 
@@ -169,12 +160,12 @@ class Application:
     def __init__(self):
         logging.debug('Application.__init__ called')
         self.settings_manager = SettingsManager()
-        self.openai_manager = OpenAIManager(self.settings_manager)
+        self.openai_manager = OpenAIManager()
         self.clipboard_handler = ClipboardHandler()
         self.hotkey = GlobalHotKey()
         
         # Create the API instance
-        self.rewrite_manager = RewriteManager(self.openai_manager, self.clipboard_handler)
+        self.rewrite_manager = RewriteManager(self.openai_manager, self.settings_manager, self.clipboard_handler)
         self.web_api = WebViewAPI(
             self.settings_manager,
             self.rewrite_manager,

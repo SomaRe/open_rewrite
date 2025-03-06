@@ -1,14 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Function to execute after pywebview is ready
     function initializeSettings() {
-        loadSettings(); // Load settings upon page load
+        loadSettings();
     }
 
-    // Check if pywebview is already ready
     if (window.pywebview) {
         initializeSettings();
     } else {
-        // Wait for the pywebviewready event
         window.addEventListener('pywebviewready', initializeSettings);
     }
 });
@@ -174,7 +171,7 @@ function saveSettings() {
     // Call the Python API to save settings
     pywebview.api.save_settings(settings).then(() => {
         console.log("Settings saved successfully");
-        window.location.reload();
+        loadSettings();
     }).catch(error => {
         console.error("Error saving settings:", error);
     });
@@ -182,7 +179,7 @@ function saveSettings() {
 
 function resetToDefaults() {
     pywebview.api.reset_to_defaults().then(() => {
-        window.location.reload(); 
+        loadSettings();
     }).catch(error => {
         console.error("Error resetting to defaults:", error);
     });
