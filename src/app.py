@@ -69,7 +69,9 @@ class WebViewAPI:
                 width=800,
                 height=600,
                 on_top=True,
-                js_api=self.settings_api
+                js_api=self.settings_api,
+                frameless=True,
+                easy_drag=True
             )
             settings_window.show()
             logging.debug('WebViewAPI.create_settings_window: settings window created and shown')
