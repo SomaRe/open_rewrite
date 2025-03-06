@@ -23,6 +23,7 @@ class ClipboardHandler:
         for callback in self.callbacks:
             callback(text)
         logging.debug('ClipboardHandler.text_copied finished')
+        logging.debug(f"Copied text: {text[:10]}...")
             
     def get_highlighted_text(self):
         logging.debug('ClipboardHandler.get_highlighted_text called')

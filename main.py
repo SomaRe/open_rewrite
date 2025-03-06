@@ -7,7 +7,7 @@ def main():
     logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
     logger = logging.getLogger(__name__)
     logger.debug('main function called')
-    app = Application(logger=logger)
+    app = Application()
     app.initialize()
 
     # Start the application
