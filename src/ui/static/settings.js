@@ -66,7 +66,7 @@ function createToneElement(name, data) {
 
 function createFormatElement(name, data) {
     const formatDiv = document.createElement('div');
-    formatDiv.classList.add('mb-4', 'pb-4', 'border-b', 'border-zinc-700');
+    formatDiv.classList.add('mb-4', 'pb-4', 'border-b', 'border-zinc-700', 'format');
     formatDiv.innerHTML = `
         <div class="mb-2">
             <label class="block mb-1 font-medium">Name:</label>
