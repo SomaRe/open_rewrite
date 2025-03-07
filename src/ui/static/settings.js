@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     function initializeSettings() {
         loadSettings();
-        showSection('general'); // Show general section by default
+        showSection('general');
     }
 
     if (window.pywebview) {
@@ -91,14 +91,14 @@ function saveSettings() {
 
 function createToneElement(name, data) {
     const toneDiv = document.createElement('div');
-    toneDiv.classList.add('bg-zinc-900', 'border', 'border-zinc-700', 'rounded-lg', 'p-4', 'tone');
+    toneDiv.classList.add('bg-zinc-900', 'p-4', 'tone');
     toneDiv.dataset.name = name;
     toneDiv.innerHTML = `
         <div class="flex items-center mb-3">
-            <img class="w-8 h-8 mr-3 tone-icon" src="${data.icon}" alt="${name}">
+            <img class="w-6 h-6 mr-3 tone-icon" src="${data.icon}" alt="${name}">
             <span class="font-semibold text-lg tone-name">${name}</span>
         </div>
-        <div class="text-sm text-zinc-300 mb-4 tone-prompt">${data.prompt}</div>
+        <div class="text-sm text-zinc-300 mb-4 tone-prompt line-clamp-3">${data.prompt}</div>
         <div class="flex justify-end space-x-2">
             <button class="bg-blue-700 hover:bg-blue-600 text-white font-medium py-1 px-2 rounded-md text-sm" onclick="editTone(this.parentNode.parentNode)">Edit</button>
             <button class="bg-red-700 hover:bg-red-600 text-white font-medium py-1 px-2 rounded-md text-sm" onclick='deleteTone("${name}")'>Delete</button>
@@ -109,14 +109,14 @@ function createToneElement(name, data) {
 
 function createFormatElement(name, data) {
     const formatDiv = document.createElement('div');
-    formatDiv.classList.add('bg-zinc-900', 'border', 'border-zinc-700', 'rounded-lg', 'p-4', 'format');
+    formatDiv.classList.add('bg-zinc-900', 'p-4', 'format');
     formatDiv.dataset.name = name;
     formatDiv.innerHTML = `
         <div class="flex items-center mb-3">
-            <img class="w-8 h-8 mr-3 format-icon" src="${data.icon}" alt="${name}">
+            <img class="w-6 h-6 mr-3 format-icon" src="${data.icon}" alt="${name}">
             <span class="font-semibold text-lg format-name">${name}</span>
         </div>
-        <div class="text-sm text-zinc-300 mb-4 format-prompt">${data.prompt}</div>
+        <div class="text-sm text-zinc-300 mb-4 format-prompt line-clamp-3">${data.prompt}</div>
         <div class="flex justify-end space-x-2">
             <button class="bg-blue-700 hover:bg-blue-600 text-white font-medium py-1 px-2 rounded-md text-sm" onclick="editFormat(this.parentNode.parentNode)">Edit</button>
             <button class="bg-red-700 hover:bg-red-600 text-white font-medium py-1 px-2 rounded-md text-sm" onclick='deleteFormat("${name}")'>Delete</button>
