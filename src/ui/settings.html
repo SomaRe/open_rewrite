@@ -55,8 +55,22 @@
                 <div id="tones-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     <!-- Tones will be loaded here -->
                 </div>
+                <style>
+                    .tone, .format {
+                        display: flex;
+                        flex-direction: column;
+                    }
+                    .tone-prompt, .format-prompt {
+                        max-height: 4.5rem; /* Approximately 3 lines */
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        display: -webkit-box;
+                        -webkit-line-clamp: 3;
+                        -webkit-box-orient: vertical;
+                    }
+                </style>
 
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4" onclick="showNewToneForm()">Add Tone</button>
+                <button class="bg-zinc-700 hover:bg-zinc-600 text-zinc-200 hover:text-white font-medium py-1.5 px-3 rounded-md border border-zinc-600 hover:border-zinc-500 transition-all duration-200 mt-4" onclick="showNewToneForm()">Add Tone</button>
 
                 <div id="new-tone-form" class="mt-4 space-y-2 hidden">
                     <h4 class="text-lg font-semibold mb-2">Add New Tone</h4>
@@ -73,8 +87,8 @@
                         <textarea id="new-tone-prompt" class="w-full p-2 bg-zinc-900 border border-zinc-700 rounded" placeholder="Prompt"></textarea>
                     </div>
                     <div class="flex justify-end space-x-2">
-                        <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" onclick="addNewTone()">Save</button>
-                        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onclick="hideNewToneForm()">Cancel</button>
+                        <button class="bg-green-700 hover:bg-green-600 text-white font-medium py-1.5 px-3 rounded-md border border-green-600 hover:border-green-500 transition-all duration-200" onclick="addNewTone()">Save</button>
+                        <button class="bg-zinc-700 hover:bg-zinc-600 text-zinc-200 hover:text-white font-medium py-1.5 px-3 rounded-md border border-zinc-600 hover:border-zinc-500 transition-all duration-200" onclick="hideNewToneForm()">Cancel</button>
                     </div>
                 </div>
             </div>
@@ -86,7 +100,7 @@
                     <!-- Formats will be loaded here -->
                 </div>
 
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4" onclick="showNewFormatForm()">Add Format</button>
+                <button class="bg-zinc-700 hover:bg-zinc-600 text-zinc-200 hover:text-white font-medium py-1.5 px-3 rounded-md border border-zinc-600 hover:border-zinc-500 transition-all duration-200 mt-4" onclick="showNewFormatForm()">Add Format</button>
 
                 <div id="new-format-form" class="mt-4 space-y-2 hidden">
                     <h4 class="text-lg font-semibold mb-2">Add New Format</h4>
@@ -103,8 +117,8 @@
                         <textarea id="new-format-prompt" class="w-full p-2 bg-zinc-900 border border-zinc-700 rounded" placeholder="Prompt"></textarea>
                     </div>
                     <div class="flex justify-end space-x-2">
-                        <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" onclick="addNewFormat()">Save</button>
-                        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onclick="hideNewFormatForm()">Cancel</button>
+                        <button class="bg-green-700 hover:bg-green-600 text-white font-medium py-1.5 px-3 rounded-md border border-green-600 hover:border-green-500 transition-all duration-200" onclick="addNewFormat()">Save</button>
+                        <button class="bg-zinc-700 hover:bg-zinc-600 text-zinc-200 hover:text-white font-medium py-1.5 px-3 rounded-md border border-zinc-600 hover:border-zinc-500 transition-all duration-200" onclick="hideNewFormatForm()">Cancel</button>
                     </div>
                 </div>
             </div>

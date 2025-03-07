@@ -145,9 +145,21 @@ function addNewTone() {
 }
 
 //Edit a Tone
-function editTone(toneElement){
-    console.log("Edit a Tone");
+function editTone(toneElement) {
+    const name = toneElement.dataset.name;
+    const icon = toneElement.querySelector('.tone-icon').src;
+    const prompt = toneElement.querySelector('.tone-prompt').textContent;
 
+    // Populate the new tone form with existing data
+    document.getElementById('new-tone-name').value = name;
+    document.getElementById('new-tone-icon').value = icon;
+    document.getElementById('new-tone-prompt').value = prompt;
+
+    // Show the form
+    showNewToneForm();
+
+    // Remove the original tone
+    toneElement.remove();
 }
 
 // Function to delete a tone
