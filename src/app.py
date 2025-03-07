@@ -154,6 +154,13 @@ class WebViewAPI:
         logging.debug('WebViewAPI.close_window finished')
         return True
 
+    def exit_app(self):
+        logging.debug('WebViewAPI.exit_app called')
+        """Exit the application"""
+        webview.stop()
+        logging.debug('WebViewAPI.exit_app finished')
+        return True
+
     def open_settings_window(self):
         logging.debug('WebViewAPI.open_settings_window called')
         """Opens the settings window."""

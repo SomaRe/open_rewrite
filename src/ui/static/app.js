@@ -7,7 +7,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // Function to execute after pywebview is ready
     function initializeApp() {
         loadOptions();
+    
+        // Close settings menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const settingsMenu = document.getElementById('settings-menu');
+            const settingsButton = document.querySelector('.relative button');
+            if (!settingsMenu.contains(event.target) && !settingsButton.contains(event.target)) {
+                settingsMenu.classList.add('hidden');
+            }
+        });
     }
+
 
     // Check if pywebview is already ready
     if (window.pywebview) {
@@ -47,6 +57,16 @@ function loadOptions() {
         console.error('Error getting settings:', error);
     });
 }
+
+function toggleSettingsMenu() {
+    const menu = document.getElementById('settings-menu');
+    menu.classList.toggle('hidden');
+}
+
+function exitApp() {
+    pywebview.api.exit_app();
+}
+
 
 // Create an option button
 function createOptionButton(name, icon, category) {

@@ -11,7 +11,7 @@ def main():
     app.initialize()
 
     # Start the application
-    webview.start(ssl=True)
+    webview.start(debug=True)
     logger.debug('webview.start finished')
 
 if __name__ == '__main__':
