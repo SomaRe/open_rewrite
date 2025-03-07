@@ -83,8 +83,8 @@ function createToneElement(name, data) {
         </div>
         <div class="text-sm text-zinc-300 mb-4 tone-prompt">${data.prompt}</div>
         <div class="flex justify-end space-x-2">
-            <button class="text-blue-400 hover:text-blue-300 font-medium" onclick="editTone(this.parentNode.parentNode)">Edit</button>
-            <button class="text-red-400 hover:text-red-300 font-medium" onclick='deleteTone("${name}")'>Delete</button>
+            <button class="bg-blue-700 hover:bg-blue-600 text-white font-medium py-1 px-2 rounded-md text-sm" onclick="editTone(this.parentNode.parentNode)">Edit</button>
+            <button class="bg-red-700 hover:bg-red-600 text-white font-medium py-1 px-2 rounded-md text-sm" onclick='deleteTone("${name}")'>Delete</button>
         </div>
     `;
     return toneDiv;
@@ -101,8 +101,8 @@ function createFormatElement(name, data) {
         </div>
         <div class="text-sm text-zinc-300 mb-4 format-prompt">${data.prompt}</div>
         <div class="flex justify-end space-x-2">
-            <button class="text-blue-400 hover:text-blue-300 font-medium" onclick="editFormat(this.parentNode.parentNode)">Edit</button>
-            <button class="text-red-400 hover:text-red-300 font-medium" onclick='deleteFormat("${name}")'>Delete</button>
+            <button class="bg-blue-700 hover:bg-blue-600 text-white font-medium py-1 px-2 rounded-md text-sm" onclick="editFormat(this.parentNode.parentNode)">Edit</button>
+            <button class="bg-red-700 hover:bg-red-600 text-white font-medium py-1 px-2 rounded-md text-sm" onclick='deleteFormat("${name}")'>Delete</button>
         </div>
     `;
     return formatDiv;
