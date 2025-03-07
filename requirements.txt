@@ -1,0 +1,5 @@
+pywebview
+openai
+pynput
+pyperclip
+pyinstaller
