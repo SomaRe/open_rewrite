@@ -72,7 +72,7 @@ class WebViewAPI:
             settings_window = webview.create_window(
                 "Settings",
                 html_path,
-                width=800,
+                width=1000,
                 height=600,
                 js_api=self.settings_api,
                 background_color="#27272a"

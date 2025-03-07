@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     function initializeSettings() {
         loadSettings();
+        showSection('general'); // Show general section by default
     }
 
     if (window.pywebview) {
@@ -9,6 +10,22 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('pywebviewready', initializeSettings);
     }
 });
+
+function showSection(section) {
+    // Hide all sections
+    document.querySelectorAll('[id$="-section"]').forEach(el => {
+        el.classList.add('hidden');
+    });
+    
+    // Show the selected section
+    document.getElementById(`${section}-section`).classList.remove('hidden');
+    
+    // Update active state in sidebar
+    document.querySelectorAll('nav button').forEach(button => {
+        button.classList.remove('bg-zinc-700');
+    });
+    document.querySelector(`nav button[onclick="showSection('${section}')"]`).classList.add('bg-zinc-700');
+}
 
 function loadSettings() {
     pywebview.api.get_settings().then(settings => {
