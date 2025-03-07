@@ -1,4 +1,5 @@
 pywebview
+cryptography
 openai
 pynput
 pyperclip
