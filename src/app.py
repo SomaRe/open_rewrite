@@ -55,7 +55,12 @@ class WebViewAPI:
         self.clipboard_handler = clipboard_handler
         self.openai_manager = OpenAIManager()
         self.settings_api = SettingsAPI(self.settings_manager)
+        self._window = None
         logging.debug('WebViewAPI.__init__ finished')
+
+    def set_window(self, window):
+        """Set the window reference"""
+        self._window = window
 
     def create_settings_window(self):
         logging.debug('WebViewAPI.create_settings_window called')
@@ -157,7 +162,8 @@ class WebViewAPI:
     def exit_app(self):
         logging.debug('WebViewAPI.exit_app called')
         """Exit the application"""
-        webview.stop()
+        if self._window:
+            self._window.destroy()
         logging.debug('WebViewAPI.exit_app finished')
         return True
 
@@ -191,7 +197,7 @@ class Application:
         logging.debug(f'Application.initialize: html_path = {html_path}')
         
         # Create window with the API
-        webview.create_window(
+        window = webview.create_window(
             'Open Rewrite',
             html_path,
             js_api=self.web_api,
@@ -201,6 +207,9 @@ class Application:
             frameless=True,
             easy_drag=True,
         )
+
+        # Pass window reference to API
+        self.web_api.set_window(window)
         logging.debug('Application.initialize: main window created')
 
         # Setup connections
