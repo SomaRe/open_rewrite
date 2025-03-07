@@ -124,6 +124,12 @@ function hideNewToneForm() {
     document.getElementById('new-tone-icon').value   = "";
     document.getElementById('new-tone-prompt').value = "";
 
+    // Restore original tone if it exists
+    if (originalToneElement) {
+        const tonesList = document.getElementById('tones-list');
+        tonesList.appendChild(originalToneElement);
+        originalToneElement = null;
+    }
 }
 
 // Function to add a new tone
@@ -144,8 +150,14 @@ function addNewTone() {
     }
 }
 
+// Store original tone element when editing
+let originalToneElement = null;
+
 //Edit a Tone
 function editTone(toneElement) {
+    // Store the original element
+    originalToneElement = toneElement.cloneNode(true);
+    
     const name = toneElement.dataset.name;
     const icon = toneElement.querySelector('.tone-icon').src;
     const prompt = toneElement.querySelector('.tone-prompt').textContent;
@@ -160,6 +172,27 @@ function editTone(toneElement) {
 
     // Remove the original tone
     toneElement.remove();
+}
+
+//Edit a Format
+function editFormat(formatElement) {
+    // Store the original element
+    originalFormatElement = formatElement.cloneNode(true);
+    
+    const name = formatElement.dataset.name;
+    const icon = formatElement.querySelector('.format-icon').src;
+    const prompt = formatElement.querySelector('.format-prompt').textContent;
+
+    // Populate the new format form with existing data
+    document.getElementById('new-format-name').value = name;
+    document.getElementById('new-format-icon').value = icon;
+    document.getElementById('new-format-prompt').value = prompt;
+
+    // Show the form
+    showNewFormatForm();
+
+    // Remove the original format
+    formatElement.remove();
 }
 
 // Function to delete a tone
@@ -177,6 +210,9 @@ function showNewFormatForm() {
     form.classList.remove('hidden');
 }
 
+// Store original format element when editing
+let originalFormatElement = null;
+
 // Function to hide the "add new Format" form
 function hideNewFormatForm() {
     const form = document.getElementById('new-format-form');
@@ -186,6 +222,13 @@ function hideNewFormatForm() {
     document.getElementById('new-format-name').value = "";
     document.getElementById('new-format-icon').value = "";
     document.getElementById('new-format-prompt').value = "";
+
+    // Restore original format if it exists
+    if (originalFormatElement) {
+        const formatsList = document.getElementById('formats-list');
+        formatsList.appendChild(originalFormatElement);
+        originalFormatElement = null;
+    }
 }
 
 // Function to add a new format
