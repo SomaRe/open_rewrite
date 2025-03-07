@@ -4,7 +4,7 @@ a = Analysis(
     ['main.py'],
     pathex=[],
     binaries=[],
-    datas=[('src/ui', '.')],
+    datas=[('src/ui', 'src/ui')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
@@ -20,19 +20,17 @@ exe = EXE(
     a.scripts,
     [],
     exclude_binaries=True,
-    name='main',
+    name='open-rewrite-windows-x64',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
     upx=True,
-    console=True,
+    console=False,
     disable_windowed_traceback=False,
     argv_emulation=False,
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    # Change output directory for exe
-    dest_base='C:\\Users\\shiva\\Desktop\\main',
 )
 coll = COLLECT(
     exe,
@@ -41,9 +39,5 @@ coll = COLLECT(
     strip=False,
     upx=True,
     upx_exclude=[],
-    name='main',
-    # Change output directory for collection
-    strip_binaries=False,
-    upx_binaries=True,
-    distpath='C:\\Users\\shiva\\Desktop',
+    name='open-rewrite-windows-x64',
 )
