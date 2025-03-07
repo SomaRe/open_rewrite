@@ -1,4 +1,6 @@
 venv
+build
+dist
 .aider*
 .env
 __pycache__
