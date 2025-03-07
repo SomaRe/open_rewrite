@@ -74,24 +74,17 @@ function saveSettings() {
 
 function createToneElement(name, data) {
     const toneDiv = document.createElement('div');
-    toneDiv.classList.add('mb-4', 'pb-4', 'border-b', 'border-zinc-700', 'tone');
+    toneDiv.classList.add('bg-zinc-900', 'border', 'border-zinc-700', 'rounded-lg', 'p-4', 'tone');
     toneDiv.dataset.name = name;
     toneDiv.innerHTML = `
-        <div class="flex items-center justify-between mb-2">
-            <div class="flex items-center">
-                <img class="w-6 h-6 mr-2 tone-icon" src="${data.icon}" alt="${name}">
-                <span class="font-medium tone-name">${name}</span>
-            </div>
-            <div>
-                <button class="edit-button bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onclick="editTone(this.parentNode.parentNode.parentNode)">Edit</button>
-                <button class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded" onclick='deleteTone("${name}")'>
-                    <img class="w-6" src="static/material_icons_round/content/round_clear_black_48dp_white.png" alt="Delete">
-                </button>
-            </div>
+        <div class="flex items-center mb-3">
+            <img class="w-8 h-8 mr-3 tone-icon" src="${data.icon}" alt="${name}">
+            <span class="font-semibold text-lg tone-name">${name}</span>
         </div>
-        <div class="mb-2">
-            <label class="block mb-1 font-medium">Prompt:</label>
-            <div class="w-full p-2 bg-zinc-900 border border-zinc-700 rounded tone-prompt">${data.prompt}</div>
+        <div class="text-sm text-zinc-300 mb-4 tone-prompt">${data.prompt}</div>
+        <div class="flex justify-end space-x-2">
+            <button class="text-blue-400 hover:text-blue-300 font-medium" onclick="editTone(this.parentNode.parentNode)">Edit</button>
+            <button class="text-red-400 hover:text-red-300 font-medium" onclick='deleteTone("${name}")'>Delete</button>
         </div>
     `;
     return toneDiv;
@@ -99,24 +92,17 @@ function createToneElement(name, data) {
 
 function createFormatElement(name, data) {
     const formatDiv = document.createElement('div');
-    formatDiv.classList.add('mb-4', 'pb-4', 'border-b', 'border-zinc-700', 'format');
+    formatDiv.classList.add('bg-zinc-900', 'border', 'border-zinc-700', 'rounded-lg', 'p-4', 'format');
     formatDiv.dataset.name = name;
     formatDiv.innerHTML = `
-        <div class="flex items-center justify-between mb-2">
-            <div class="flex items-center">
-                <img class="w-6 h-6 mr-2 format-icon" src="${data.icon}" alt="${name}">
-                <span class="font-medium format-name">${name}</span>
-            </div>
-            <div>
-                <button class="edit-button bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onclick="editFormat(this.parentNode.parentNode.parentNode)">Edit</button>
-                <button class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded" onclick='deleteFormat("${name}")'>
-                    <img class="w-6" src="static/material_icons_round/content/round_clear_black_48dp_white.png" alt="Delete">
-                </button>
-            </div>
+        <div class="flex items-center mb-3">
+            <img class="w-8 h-8 mr-3 format-icon" src="${data.icon}" alt="${name}">
+            <span class="font-semibold text-lg format-name">${name}</span>
         </div>
-        <div class="mb-2">
-            <label class="block mb-1 font-medium">Prompt:</label>
-            <div class="w-full p-2 bg-zinc-900 border border-zinc-700 rounded format-prompt">${data.prompt}</div>
+        <div class="text-sm text-zinc-300 mb-4 format-prompt">${data.prompt}</div>
+        <div class="flex justify-end space-x-2">
+            <button class="text-blue-400 hover:text-blue-300 font-medium" onclick="editFormat(this.parentNode.parentNode)">Edit</button>
+            <button class="text-red-400 hover:text-red-300 font-medium" onclick='deleteFormat("${name}")'>Delete</button>
         </div>
     `;
     return formatDiv;

@@ -75,9 +75,8 @@ class WebViewAPI:
                 width=800,
                 height=600,
                 js_api=self.settings_api,
-                frameless=True,
-                easy_drag=True,
-                resizable=True
+                background_color="#27272a"
+                # frameless=True,
             )
             settings_window.show()
             logging.debug('WebViewAPI.create_settings_window: settings window created and shown')
@@ -205,7 +204,7 @@ class Application:
             height=400,
             on_top=True,
             frameless=True,
-            easy_drag=True,
+            background_color="#27272a"
         )
 
         # Pass window reference to API

@@ -9,16 +9,16 @@
 </head>
 <body class="bg-zinc-800 text-white">
     <!-- Title Bar -->
-    <div class="bg-zinc-800 flex items-center justify-center pywebview-drag-region pt-1 fixed top-0 left-0 w-full">
+    <!-- <div class="bg-zinc-800 flex items-center justify-center pywebview-drag-region pt-1 fixed top-0 left-0 w-full"> -->
         <!-- Drag Handle -->
-        <div class="pywebview-drag-region flex items-start justify-center cursor-grab h-full w-full">
-            <div class="bg-zinc-700 h-1 w-14 rounded"></div>
-        </div>
+        <!-- <div class="pywebview-drag-region flex items-start justify-center cursor-grab h-full w-full"> -->
+            <!-- <div class="bg-zinc-700 h-1 w-14 rounded"></div> -->
+        <!-- </div> -->
         <!-- Close Button -->
-        <button class="p-2 hover:bg-zinc-700 rounded" onclick="pywebview.api.close_window()">
-            <img class="w-6" src="static/material_icons_round/navigation/round_close_black_48dp_white.png" alt="Close">
-        </button>
-    </div>
+        <!-- <button class="p-2 hover:bg-zinc-700 rounded" onclick="pywebview.api.close_window()"> -->
+            <!-- <img class="w-6" src="static/material_icons_round/navigation/round_close_black_48dp_white.png" alt="Close"> -->
+        <!-- </button> -->
+    <!-- </div> -->
     
     <div class="container mx-auto px-16 py-8">
         <!-- Settings Content -->
@@ -52,7 +52,7 @@
             <!-- Tones Settings -->
             <div class="p-4 border border-zinc-700 rounded-lg">
                 <h3 class="text-xl font-semibold mb-4">Tones</h3>
-                <div id="tones-list" class="space-y-4">
+                <div id="tones-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     <!-- Tones will be loaded here -->
                 </div>
 
@@ -82,7 +82,7 @@
              <!-- Format Settings -->
             <div class="p-4 border border-zinc-700 rounded-lg">
                 <h3 class="text-xl font-semibold mb-4">Formats</h3>
-                <div id="formats-list" class="space-y-4">
+                <div id="formats-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     <!-- Formats will be loaded here -->
                 </div>
 
