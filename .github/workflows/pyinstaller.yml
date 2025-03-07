@@ -11,7 +11,7 @@ on:
 jobs:
   build:
     runs-on: windows-latest
-    
+    if: ${{ github.event_name == 'push' && contains(github.event.head_commit.message, '[build]') }}
     steps:
     - uses: actions/checkout@v4
     
