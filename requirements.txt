@@ -4,3 +4,4 @@ openai
 pynput
 pyperclip
 pyinstaller
+python-dotenv
