@@ -73,7 +73,7 @@ function showCategoryIcons(category, icons) {
             <img class="w-8 h-8" src="static/${icon}" alt="${icon}">
         `;
         iconDiv.addEventListener('click', () => {
-            document.getElementById(currentIconField).value = icon;
+            document.getElementById(currentIconField).value = "static/"+icon;
             closeIconSelector();
         });
         iconGrid.appendChild(iconDiv);
@@ -163,6 +163,7 @@ function saveSettings() {
         const fullIconPath = toneElement.querySelector('.tone-icon').src;
         // Extract relative path from static folder
         const staticIndex = fullIconPath.indexOf('static/');
+        console.log(name, fullIconPath, staticIndex);
         const icon = staticIndex !== -1 ? fullIconPath.substring(staticIndex) : '';
         const prompt = toneElement.querySelector('.tone-prompt').textContent;
         settings.tones[name] = { icon: icon, prompt: prompt };
