@@ -12,28 +12,74 @@ function closeIconSelector() {
     currentIconField = null;
 }
 
+let currentCategory = null;
+
 async function loadIcons() {
     try {
-        const icons = await pywebview.api.get_available_icons();
-        const iconGrid = document.getElementById('icon-grid');
-        iconGrid.innerHTML = '';
-
-        icons.forEach(icon => {
-            const iconDiv = document.createElement('div');
-            iconDiv.className = 'flex flex-col items-center p-2 cursor-pointer hover:bg-zinc-700 rounded';
-            iconDiv.innerHTML = `
-                <img class="w-8 h-8" src="static/${icon}" alt="${icon}">
-                <span class="text-xs mt-1 text-center">${icon.split('/').pop()}</span>
-            `;
-            iconDiv.addEventListener('click', () => {
-                document.getElementById(currentIconField).value = icon;
-                closeIconSelector();
-            });
-            iconGrid.appendChild(iconDiv);
+        const iconsByCategory = await pywebview.api.get_available_icons();
+        const categories = Object.keys(iconsByCategory);
+        
+        // Load category tabs
+        const categoryTabs = document.getElementById('icon-categories');
+        const tabsContainer = categoryTabs.querySelector('div');
+        tabsContainer.innerHTML = '';
+        categories.forEach(category => {
+            const tab = document.createElement('button');
+            tab.className = 'px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap';
+            tab.textContent = category;
+            tab.addEventListener('click', () => showCategoryIcons(category, iconsByCategory[category]));
+            
+            // Add active class if first category
+            if (!currentCategory) {
+                tab.classList.add('bg-zinc-700', 'text-white');
+                currentCategory = category;
+            } else {
+                tab.classList.add('text-zinc-400', 'hover:text-white');
+            }
+            
+            tabsContainer.appendChild(tab);
         });
+
+        // Show first category's icons
+        if (categories.length > 0) {
+            showCategoryIcons(currentCategory, iconsByCategory[currentCategory]);
+        }
     } catch (error) {
         console.error('Error loading icons:', error);
     }
+}
+
+function showCategoryIcons(category, icons) {
+    const iconGrid = document.getElementById('icon-grid');
+    iconGrid.innerHTML = '';
+
+    // Update active tab
+    const categoryTabs = document.getElementById('icon-categories');
+    categoryTabs.querySelectorAll('button').forEach(tab => {
+        if (tab.textContent === category) {
+            tab.classList.add('bg-zinc-700', 'text-white');
+            tab.classList.remove('text-zinc-400', 'hover:text-white');
+        } else {
+            tab.classList.remove('bg-zinc-700', 'text-white');
+            tab.classList.add('text-zinc-400', 'hover:text-white');
+        }
+    });
+
+    // Show icons for selected category
+    icons.forEach(icon => {
+        const iconDiv = document.createElement('div');
+        iconDiv.className = 'flex flex-col items-center p-2 cursor-pointer hover:bg-zinc-700 rounded';
+        iconDiv.innerHTML = `
+            <img class="w-8 h-8" src="static/${icon}" alt="${icon}">
+        `;
+        iconDiv.addEventListener('click', () => {
+            document.getElementById(currentIconField).value = icon;
+            closeIconSelector();
+        });
+        iconGrid.appendChild(iconDiv);
+    });
+
+    currentCategory = category;
 }
 
 // Close modal when clicking outside
@@ -271,6 +317,18 @@ function deleteTone(name) {
 function showNewFormatForm() {
     const form = document.getElementById('new-format-form');
     form.classList.remove('hidden');
+    
+    // Clear fields
+    document.getElementById('new-format-name').value = "";
+    document.getElementById('new-format-icon').value = "";
+    document.getElementById('new-format-prompt').value = "";
+
+    // Restore original format if it exists
+    if (originalFormatElement) {
+        const formatsList = document.getElementById('formats-list');
+        formatsList.appendChild(originalFormatElement);
+        originalFormatElement = null;
+    }
 }
 
 // Store original format element when editing

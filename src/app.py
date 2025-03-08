@@ -48,18 +48,22 @@ class SettingsAPI:
         return True
 
     def get_available_icons(self):
-        """Get list of available material icons (white versions)"""
+        """Get list of available material icons (white versions) organized by category"""
         import os
-        icons = []
+        icons = {}
         icon_dir = os.path.join('src', 'ui', 'static', 'material_icons_round')
         for root, dirs, files in os.walk(icon_dir):
+            category = os.path.basename(root)
+            if category == 'material_icons_round':
+                continue
+            icons[category] = []
             for file in files:
                 if file.endswith('white.png'):
                     # Get relative path from static folder
                     rel_path = os.path.relpath(os.path.join(root, file), 
                                              os.path.join('src', 'ui', 'static'))
-                    icons.append(rel_path.replace('\\', '/'))
-        return sorted(icons)
+                    icons[category].append(rel_path.replace('\\', '/'))
+        return {k: sorted(v) for k, v in icons.items()}
 
 class WebViewAPI:
     def __init__(self, settings_manager, rewrite_manager, clipboard_handler):
