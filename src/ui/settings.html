@@ -69,7 +69,10 @@
                         </div>
                         <div>
                             <label class="block text-sm font-medium mb-1" for="new-tone-icon">Icon:</label>
-                            <input type="text" id="new-tone-icon" class="w-full p-2 bg-zinc-900 border border-zinc-700 rounded" placeholder="Icon URL or name">
+                            <div class="flex items-center gap-2">
+                                <input type="text" id="new-tone-icon" class="w-full p-2 bg-zinc-900 border border-zinc-700 rounded" placeholder="Select icon" readonly>
+                                <button type="button" onclick="openIconSelector('new-tone-icon')" class="bg-zinc-700 hover:bg-zinc-600 text-white px-3 py-2 rounded">Select</button>
+                            </div>
                         </div>
                         <div>
                             <label class="block text-sm font-medium mb-1" for="new-tone-prompt">Prompt:</label>
@@ -116,6 +119,24 @@
             </div>
         </div>
     </div>
+
+    <!-- Icon Selector Modal -->
+    <div id="icon-selector-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+        <div class="absolute inset-0 flex items-center justify-center">
+            <div class="bg-zinc-800 rounded-lg w-3/4 h-3/4 p-4 flex flex-col">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-semibold">Select Icon</h3>
+                    <button onclick="closeIconSelector()" class="text-zinc-400 hover:text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                <div id="icon-grid" class="grid grid-cols-6 gap-4 overflow-y-auto flex-1"></div>
+            </div>
+        </div>
+    </div>
+
     <script src="static/settings.js"></script>
 </body>
 </html>
