@@ -160,7 +160,10 @@ function saveSettings() {
     // Save tones
     document.querySelectorAll('.tone').forEach(toneElement => {
         const name = toneElement.dataset.name;
-        const icon = toneElement.querySelector('.tone-icon').src;
+        const fullIconPath = toneElement.querySelector('.tone-icon').src;
+        // Extract relative path from static folder
+        const staticIndex = fullIconPath.indexOf('static/');
+        const icon = staticIndex !== -1 ? fullIconPath.substring(staticIndex) : '';
         const prompt = toneElement.querySelector('.tone-prompt').textContent;
         settings.tones[name] = { icon: icon, prompt: prompt };
     });
@@ -168,7 +171,10 @@ function saveSettings() {
     // Save formats
     document.querySelectorAll('.format').forEach(formatElement => {
         const name = formatElement.dataset.name;
-        const icon = formatElement.querySelector('.format-icon').src;
+        const fullIconPath = formatElement.querySelector('.format-icon').src;
+        // Extract relative path from static folder
+        const staticIndex = fullIconPath.indexOf('static/');
+        const icon = staticIndex !== -1 ? fullIconPath.substring(staticIndex) : '';
         const prompt = formatElement.querySelector('.format-prompt').textContent;
         settings.formats[name] = { icon: icon, prompt: prompt };
     });
