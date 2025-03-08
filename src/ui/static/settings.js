@@ -320,11 +320,14 @@ function editFormat(formatElement) {
 
 // Function to delete a tone
 function deleteTone(name) {
-    document.querySelectorAll('.tone').forEach(toneElement => {
-        if (toneElement.dataset.name === name) {
-            toneElement.remove();
-        }
-    });
+    if (confirm(`Are you sure you want to delete the tone "${name}"?`)) {
+        document.querySelectorAll('.tone').forEach(toneElement => {
+            if (toneElement.dataset.name === name) {
+                toneElement.remove();
+                saveSettings();
+            }
+        });
+    }
 }
 
 // Function to show the "add new Format" form
@@ -389,9 +392,12 @@ function addNewFormat() {
 
 // Function to delete a format
 function deleteFormat(name) {
-    document.querySelectorAll('.format').forEach(formatElement => {
-        if (formatElement.dataset.name === name) {
-            formatElement.remove();
-        }
-    });
+    if (confirm(`Are you sure you want to delete the format "${name}"?`)) {
+        document.querySelectorAll('.format').forEach(formatElement => {
+            if (formatElement.dataset.name === name) {
+                formatElement.remove();
+                saveSettings();
+            }
+        });
+    }
 }
