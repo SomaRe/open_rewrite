@@ -67,6 +67,9 @@ class WebViewAPI:
         """Creates and shows the settings window."""
         html_path = resource_path(os.path.join('src', 'ui', 'settings.html'))
         existing_settings_windows = [w for w in webview.windows if w.title == "Settings"]
+
+        if webview.windows:
+            webview.windows[0].hide()
         
         if not existing_settings_windows:
             settings_window = webview.create_window(
