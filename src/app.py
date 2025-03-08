@@ -2,9 +2,9 @@ import os
 import time
 import webview
 import logging
-from src.settings.settings_manager import SettingsManager
-from src.llm.openai_manager import OpenAIManager
-from src.rewrite.rewrite_manager import RewriteManager
+from src.managers.settings_manager import SettingsManager
+from src.managers.llm.openai_manager import OpenAIManager
+from src.managers.rewrite_manager import RewriteManager
 from src.utils.global_hotkey import GlobalHotKey
 from src.utils.clipboard_handler import ClipboardHandler
 from src.utils.resource_path import resource_path
