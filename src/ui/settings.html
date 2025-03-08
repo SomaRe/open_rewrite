@@ -59,7 +59,10 @@
                         <!-- Tones will be loaded here -->
                     </div>
 
-                    <button class="bg-emerald-700 hover:bg-emerald-600 text-white font-medium py-1.5 px-3 rounded-md border border-emerald-600 hover:border-emerald-500 transition-all duration-200 mt-4" onclick="showNewToneForm()">Add Tone</button>
+                    <div class="flex justify-end mt-4 gap-2">
+                        <button class="bg-emerald-700 hover:bg-emerald-600 text-white font-medium py-1.5 px-3 rounded-md border border-emerald-600 hover:border-emerald-500 transition-all duration-200" onclick="showNewToneForm()">Add Tone</button>
+                        <button class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-1.5 px-3 rounded-md border border-blue-600 hover:border-blue-500 transition-all duration-200" onclick="saveSettings()">Save</button>
+                    </div>
 
                     <div id="new-tone-form" class="mt-4 space-y-2 hidden">
                         <h4 class="text-lg font-semibold mb-2">Add New Tone</h4>
@@ -94,7 +97,10 @@
                         <!-- Formats will be loaded here -->
                     </div>
 
-                    <button class="bg-emerald-700 hover:bg-emerald-600 text-white font-medium py-1.5 px-3 rounded-md border border-emerald-600 hover:border-emerald-500 transition-all duration-200 mt-4" onclick="showNewFormatForm()">Add Format</button>
+                    <div class="flex justify-end mt-4 gap-2">
+                        <button class="bg-emerald-700 hover:bg-emerald-600 text-white font-medium py-1.5 px-3 rounded-md border border-emerald-600 hover:border-emerald-500 transition-all duration-200" onclick="showNewFormatForm()">Add Format</button>
+                        <button class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-1.5 px-3 rounded-md border border-blue-600 hover:border-blue-500 transition-all duration-200" onclick="saveSettings()">Save</button>
+                    </div>
 
                     <div id="new-format-form" class="mt-4 space-y-2 hidden">
                         <h4 class="text-lg font-semibold mb-2">Add New Format</h4>
