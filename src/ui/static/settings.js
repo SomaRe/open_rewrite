@@ -181,6 +181,11 @@ function saveSettings() {
     });
 
     pywebview.api.save_settings(settings).then(() => {
+        // Don't show alert for auto-saves
+        if (!document.getElementById('new-tone-form').classList.contains('hidden') || 
+            !document.getElementById('new-format-form').classList.contains('hidden')) {
+            return;
+        }
         alert('Settings saved!');
         loadSettings();
     }).catch(error => {
@@ -261,6 +266,8 @@ function addNewTone() {
         const toneDiv = createToneElement(name, newTone);
         tonesList.appendChild(toneDiv);
         hideNewToneForm();
+        // Save settings and reload
+        saveSettings();
     } else {
         alert('Please fill in all fields for the new tone.');
     }
@@ -373,6 +380,8 @@ function addNewFormat() {
         const formatDiv = createFormatElement(name, newFormat);
         formatsList.appendChild(formatDiv);
         hideNewFormatForm();
+        // Save settings and reload
+        saveSettings();
     } else {
         alert('Please fill in all fields for the new format.');
     }
