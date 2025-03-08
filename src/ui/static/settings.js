@@ -1,3 +1,49 @@
+// Icon Selector Functions
+let currentIconField = null;
+
+function openIconSelector(fieldId) {
+    currentIconField = fieldId;
+    loadIcons();
+    document.getElementById('icon-selector-modal').classList.remove('hidden');
+}
+
+function closeIconSelector() {
+    document.getElementById('icon-selector-modal').classList.add('hidden');
+    currentIconField = null;
+}
+
+async function loadIcons() {
+    try {
+        const icons = await pywebview.api.get_available_icons();
+        const iconGrid = document.getElementById('icon-grid');
+        iconGrid.innerHTML = '';
+
+        icons.forEach(icon => {
+            const iconDiv = document.createElement('div');
+            iconDiv.className = 'flex flex-col items-center p-2 cursor-pointer hover:bg-zinc-700 rounded';
+            iconDiv.innerHTML = `
+                <img class="w-8 h-8" src="static/${icon}" alt="${icon}">
+                <span class="text-xs mt-1 text-center">${icon.split('/').pop()}</span>
+            `;
+            iconDiv.addEventListener('click', () => {
+                document.getElementById(currentIconField).value = icon;
+                closeIconSelector();
+            });
+            iconGrid.appendChild(iconDiv);
+        });
+    } catch (error) {
+        console.error('Error loading icons:', error);
+    }
+}
+
+// Close modal when clicking outside
+document.addEventListener('click', (event) => {
+    const modal = document.getElementById('icon-selector-modal');
+    if (event.target === modal) {
+        closeIconSelector();
+    }
+});
+
 document.addEventListener('DOMContentLoaded', () => {
     function initializeSettings() {
         loadSettings();

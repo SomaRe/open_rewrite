@@ -32,8 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
 function loadOptions() {
     console.log('Attempting to get settings');
     pywebview.api.get_settings().then(settings => {
-        console.log('Settings received:', settings);
-
         const optionsContainer = document.getElementById('options-container');
         optionsContainer.innerHTML = '';
 
