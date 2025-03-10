@@ -93,7 +93,7 @@ document.addEventListener('click', (event) => {
 document.addEventListener('DOMContentLoaded', () => {
     function initializeSettings() {
         loadSettings();
-        showSection('general');
+        showSection('openai');
     }
 
     if (window.pywebview) {

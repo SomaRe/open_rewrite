@@ -13,19 +13,19 @@
         <div class="w-64 bg-zinc-900 border-r border-zinc-700 p-4">
             <h2 class="text-xl font-bold mb-4">Settings</h2>
             <nav class="space-y-1">
-                <button onclick="showSection('general')" class="w-full text-left px-3 py-2 rounded-md hover:bg-zinc-700 transition-colors">General</button>
+                <button onclick="showSection('openai')" class="w-full text-left px-3 py-2 rounded-md hover:bg-zinc-700 transition-colors">OpenAI</button>
                 <button onclick="showSection('tones')" class="w-full text-left px-3 py-2 rounded-md hover:bg-zinc-700 transition-colors">Tones</button>
                 <button onclick="showSection('formats')" class="w-full text-left px-3 py-2 rounded-md hover:bg-zinc-700 transition-colors">Formats</button>
+                <button onclick="showSection('general')" class="w-full text-left px-3 py-2 rounded-md hover:bg-zinc-700 transition-colors">General</button>
             </nav>
         </div>
 
         <!-- Main Content -->
         <div class="flex-1 overflow-y-auto p-8">
-            <!-- General Section -->
-            <div id="general-section" class="space-y-6">
-                <!-- OpenAI Settings -->
+            <!-- OpenAI Section -->
+            <div id="openai-section" class="space-y-6">
                 <div class="p-4">
-                    <h3 class="text-xl font-semibold mb-4">OpenAI</h3>
+                    <h3 class="text-xl font-semibold mb-4">OpenAI Settings</h3>
                     <div class="mb-4">
                         <label class="block text-sm font-medium mb-1" for="api_key">API Key:</label>
                         <input type="text" id="api_key" class="w-full p-2 bg-zinc-900 border border-zinc-700 rounded">
@@ -42,27 +42,31 @@
                         <label class="block text-sm font-medium mb-1" for="system_message">System Message:</label>
                         <textarea id="system_message" class="w-full p-2 bg-zinc-900 border border-zinc-700 rounded" rows="4"></textarea>
                     </div>
-                </div>
-
-                <!-- Startup Options -->
-                <div class="p-4">
-                    <h3 class="text-xl font-semibold mb-4">Startup Options</h3>
-                    <div class="mb-4">
-                        <label class="block text-sm font-medium mb-1">Start with Windows:</label>
-                        <div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
-                            <input type="checkbox" id="startup-toggle" onclick="toggleStartup()" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"/>
-                            <label for="startup-toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-zinc-600 cursor-pointer"></label>
-                        </div>
-                        <span id="startup-status" class="text-sm text-zinc-400"></span>
+                    <!-- Action Buttons -->
+                    <div class="flex justify-end mt-6 space-x-4">
+                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onclick="saveSettings()">Save</button>
+                        <button class="bg-zinc-500 hover:bg-zinc-700 text-white font-bold py-2 px-4 rounded" onclick="resetToDefaults()">Reset to Defaults</button>
                     </div>
                 </div>
+            </div>
 
-                <!-- Action Buttons -->
-                <div class="flex justify-end mt-6 space-x-4">
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onclick="saveSettings()">Save</button>
-                    <button class="bg-zinc-500 hover:bg-zinc-700 text-white font-bold py-2 px-4 rounded" onclick="resetToDefaults()">Reset to Defaults</button>
+            <!-- General Section -->
+            <div id="general-section" class="space-y-6 hidden">
+                <div class="p-4">
+                    <h3 class="text-xl font-semibold mb-4">General Settings</h3>
+                    <div class="flex justify-between">
+                        <label class="block text-sm font-medium mb-1">Start with Windows:</label>
+                        <div>
+                            <div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+                                <input type="checkbox" id="startup-toggle" onclick="toggleStartup()" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"/>
+                                <label for="startup-toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-zinc-600 cursor-pointer"></label>
+                            </div>
+                            <span id="startup-status" class="text-sm text-zinc-400"></span>
+                        </div>
+                    </div>
                 </div>
             </div>
+
 
             <!-- Tones Section -->
             <div id="tones-section" class="space-y-6 hidden">
