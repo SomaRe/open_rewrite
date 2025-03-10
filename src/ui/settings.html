@@ -92,15 +92,15 @@
                     <div id="new-tone-form" class="mt-4 space-y-2 hidden">
                         <h4 class="text-lg font-semibold mb-2">Add New Tone</h4>
                         <div>
-                            <label class="block text-sm font-medium mb-1" for="new-tone-name">Name:</label>
-                            <input type="text" id="new-tone-name" class="w-full p-2 bg-zinc-900 border border-zinc-700 rounded" placeholder="Name">
+                            <label class="block text-sm font-medium mb-1">Icon:</label>
+                            <div class="flex items-center gap-2">
+                                <img id="new-tone-icon-preview" class="w-8 h-8 bg-zinc-700 rounded p-1" src="" alt="Selected Icon" style="display: none;">
+                                <button type="button" onclick="openIconSelector('tone')" class="bg-zinc-700 hover:bg-zinc-600 text-white px-2 py-1 rounded">Select Icon</button>
+                            </div>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium mb-1" for="new-tone-icon">Icon:</label>
-                            <div class="flex items-center gap-2">
-                                <input type="text" id="new-tone-icon" class="w-full p-2 bg-zinc-900 border border-zinc-700 rounded" placeholder="Select icon" readonly>
-                                <button type="button" onclick="openIconSelector('new-tone-icon')" class="bg-zinc-700 hover:bg-zinc-600 text-white px-3 py-2 rounded">Select</button>
-                            </div>
+                            <label class="block text-sm font-medium mb-1" for="new-tone-name">Name:</label>
+                            <input type="text" id="new-tone-name" class="w-full p-2 bg-zinc-900 border border-zinc-700 rounded" placeholder="Name">
                         </div>
                         <div>
                             <label class="block text-sm font-medium mb-1" for="new-tone-prompt">Prompt:</label>
@@ -130,15 +130,15 @@
                     <div id="new-format-form" class="mt-4 space-y-2 hidden">
                         <h4 class="text-lg font-semibold mb-2">Add New Format</h4>
                         <div>
-                            <label class="block text-sm font-medium mb-1" for="new-format-name">Name:</label>
-                            <input type="text" id="new-format-name" class="w-full p-2 bg-zinc-900 border border-zinc-700 rounded" placeholder="Name">
+                            <label class="block text-sm font-medium mb-1">Icon:</label>
+                            <div class="flex items-center gap-2">
+                                <img id="new-format-icon-preview" class="w-8 h-8 bg-zinc-700 rounded p-1" src="" alt="Selected Icon" style="display: none;">
+                                <button type="button" onclick="openIconSelector('format')" class="bg-zinc-700 hover:bg-zinc-600 text-white px-2 py-1 rounded">Select Icon</button>
+                            </div>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium mb-1" for="new-format-icon">Icon:</label>
-                            <div class="flex items-center gap-2">
-                                <input type="text" id="new-format-icon" class="w-full p-2 bg-zinc-900 border border-zinc-700 rounded" placeholder="Select icon" readonly>
-                                <button type="button" onclick="openIconSelector('new-format-icon')" class="bg-zinc-700 hover:bg-zinc-600 text-white px-3 py-2 rounded">Select</button>
-                            </div>
+                            <label class="block text-sm font-medium mb-1" for="new-format-name">Name:</label>
+                            <input type="text" id="new-format-name" class="w-full p-2 bg-zinc-900 border border-zinc-700 rounded" placeholder="Name">
                         </div>
                         <div>
                             <label class="block text-sm font-medium mb-1" for="new-format-prompt">Prompt:</label>

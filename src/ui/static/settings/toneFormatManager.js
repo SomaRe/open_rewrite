@@ -44,7 +44,8 @@ export function editTone(toneElement) {
     const icon = toneElement.querySelector('.tone-icon').src;
     const prompt = toneElement.querySelector('.tone-prompt').textContent;
     document.getElementById('new-tone-name').value = name;
-    document.getElementById('new-tone-icon').value = icon;
+    document.getElementById('new-tone-icon-preview').src = icon;
+    document.getElementById('new-tone-icon-preview').style.display = 'block';
     document.getElementById('new-tone-prompt').value = prompt;
     showNewToneForm();
     toneElement.remove();
@@ -120,7 +121,8 @@ export function editFormat(formatElement) {
     const icon = formatElement.querySelector('.format-icon').src;
     const prompt = formatElement.querySelector('.format-prompt').textContent;
     document.getElementById('new-format-name').value = name;
-    document.getElementById('new-format-icon').value = icon;
+    document.getElementById('new-format-icon-preview').src = icon;
+    document.getElementById('new-format-icon-preview').style.display = 'block';
     document.getElementById('new-format-prompt').value = prompt;
     showNewFormatForm();
     formatElement.remove();

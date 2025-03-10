@@ -1,8 +1,8 @@
 let currentIconField = null;
 let currentCategory = null;
 
-export function openIconSelector(fieldId) {
-    currentIconField = fieldId;
+export function openIconSelector(type) {
+    currentIconField = type;
     loadIcons();
     document.getElementById('icon-selector-modal').classList.remove('hidden');
 }
@@ -47,6 +47,20 @@ export async function loadIcons() {
 export function showCategoryIcons(category, icons) {
     const iconGrid = document.getElementById('icon-grid');
     iconGrid.innerHTML = '';
+    
+    // Add click handler for icons
+    const handleIconClick = (iconSrc) => {
+        if (currentIconField === 'tone') {
+            const preview = document.getElementById('new-tone-icon-preview');
+            preview.src = iconSrc;
+            preview.style.display = 'block';
+        } else if (currentIconField === 'format') {
+            const preview = document.getElementById('new-format-icon-preview');
+            preview.src = iconSrc;
+            preview.style.display = 'block';
+        }
+        closeIconSelector();
+    };
 
     const categoryTabs = document.getElementById('icon-categories');
     categoryTabs.querySelectorAll('button').forEach(tab => {
@@ -65,10 +79,7 @@ export function showCategoryIcons(category, icons) {
         iconDiv.innerHTML = `
             <img class="w-8 h-8" src="static/${icon}" alt="${icon}">
         `;
-        iconDiv.addEventListener('click', () => {
-            document.getElementById(currentIconField).value = "static/" + icon;
-            closeIconSelector();
-        });
+        iconDiv.addEventListener('click', () => handleIconClick("static/" + icon));
         iconGrid.appendChild(iconDiv);
     });
 
