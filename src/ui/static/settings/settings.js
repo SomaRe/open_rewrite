@@ -427,3 +427,28 @@ function deleteFormat(name) {
         });
     }
 }
+
+// Expose functions to the global scope so inline HTML attributes can access them
+const exportedFunctions = {
+  openIconSelector,
+  closeIconSelector,
+  showSection,
+  checkStartupStatus,
+  toggleStartup,
+  loadSettings,
+  saveSettings,
+  addNewTone,
+  hideNewToneForm,
+  showNewToneForm,
+  editTone,
+  deleteTone,
+  addNewFormat,
+  hideNewFormatForm,
+  showNewFormatForm,
+  editFormat,
+  deleteFormat
+};
+
+for (const [name, func] of Object.entries(exportedFunctions)) {
+  window[name] = func;
+}
