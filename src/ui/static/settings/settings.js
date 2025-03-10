@@ -19,7 +19,8 @@ const exportedFunctions = {
   hideNewFormatForm: SettingsManager.hideNewFormatForm,
   showNewFormatForm: SettingsManager.showNewFormatForm,
   editFormat: SettingsManager.editFormat,
-  deleteFormat: SettingsManager.deleteFormat
+  deleteFormat: SettingsManager.deleteFormat,
+  resetToDefaults: SettingsManager.resetToDefaults
 };
 
 for (const [name, func] of Object.entries(exportedFunctions)) {

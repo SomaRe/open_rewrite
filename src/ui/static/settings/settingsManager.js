@@ -261,3 +261,15 @@ export function deleteFormat(name) {
         });
     }
 }
+
+export function resetToDefaults() {
+    if (confirm('Are you sure you want to reset all settings to default values? This cannot be undone.')) {
+        pywebview.api.reset_to_defaults().then(() => {
+            alert('Settings have been reset to defaults');
+            loadSettings();
+        }).catch(error => {
+            console.error("Error resetting settings:", error);
+            alert('Failed to reset settings');
+        });
+    }
+}
