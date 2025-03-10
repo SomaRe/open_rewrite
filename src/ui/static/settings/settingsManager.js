@@ -13,14 +13,11 @@ export function showSection(section) {
 export function checkStartupStatus() {
     pywebview.api.check_startup_status().then(status => {
         const toggle = document.getElementById('startup-toggle');
-        const statusText = document.getElementById('startup-status');
         
         if (status === 'enabled') {
             toggle.checked = true;
-            statusText.textContent = 'App will launch at startup';
         } else {
             toggle.checked = false;
-            statusText.textContent = 'App will not launch at startup';
         }
     });
 }
