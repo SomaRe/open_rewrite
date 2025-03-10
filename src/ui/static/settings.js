@@ -119,8 +119,34 @@ function showSection(section) {
     document.querySelector(`nav button[onclick="showSection('${section}')"]`).classList.add('bg-zinc-700');
 }
 
+function checkStartupStatus() {
+    pywebview.api.check_startup_status().then(status => {
+        const toggle = document.getElementById('startup-toggle');
+        const statusText = document.getElementById('startup-status');
+        
+        if (status === 'enabled') {
+            toggle.checked = true;
+            statusText.textContent = 'App will launch at startup';
+        } else {
+            toggle.checked = false;
+            statusText.textContent = 'App will not launch at startup';
+        }
+    });
+}
+
+function toggleStartup() {
+    pywebview.api.toggle_startup().then(result => {
+        if (result.success) {
+            checkStartupStatus();
+        } else {
+            alert(result.message || 'Failed to update startup settings');
+        }
+    });
+}
+
 function loadSettings() {
     pywebview.api.get_settings().then(settings => {
+        checkStartupStatus();
         // Load OpenAI settings
         document.getElementById('api_key').value = settings.api_key || '';
         document.getElementById('base_url').value = settings.base_url || 'https://api.openai.com/v1';

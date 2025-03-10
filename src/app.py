@@ -2,6 +2,8 @@ import os
 import time
 import webview
 import logging
+import winreg as reg
+import sys
 from src.managers.settings_manager import SettingsManager
 from src.managers.llm.openai_manager import OpenAIManager
 from src.managers.rewrite_manager import RewriteManager
@@ -46,6 +48,40 @@ class SettingsAPI:
         webview.windows[1].hide()
         logging.debug('SettingsAPI.close_window finished')
         return True
+
+    def check_startup_status(self):
+        """Check if the app is in Windows startup"""
+        try:
+            key = reg.OpenKey(reg.HKEY_CURRENT_USER, 
+                            r"Software\Microsoft\Windows\CurrentVersion\Run", 
+                            0, reg.KEY_READ)
+            try:
+                value, _ = reg.QueryValueEx(key, "OpenRewrite")
+                return 'enabled' if value == sys.executable else 'disabled'
+            except FileNotFoundError:
+                return 'disabled'
+        except Exception as e:
+            print(f"Error checking startup status: {e}")
+            return 'disabled'
+
+    def toggle_startup(self):
+        """Toggle the app in Windows startup"""
+        try:
+            key = reg.OpenKey(reg.HKEY_CURRENT_USER, 
+                            r"Software\Microsoft\Windows\CurrentVersion\Run", 
+                            0, reg.KEY_SET_VALUE)
+            
+            if self.check_startup_status() == 'enabled':
+                # Remove from startup
+                reg.DeleteValue(key, "OpenRewrite")
+                return {'success': True, 'message': 'Removed from startup'}
+            else:
+                # Add to startup
+                reg.SetValueEx(key, "OpenRewrite", 0, reg.REG_SZ, sys.executable)
+                return {'success': True, 'message': 'Added to startup'}
+        except Exception as e:
+            print(f"Error toggling startup: {e}")
+            return {'success': False, 'message': str(e)}
 
     def get_available_icons(self):
         """Get list of available material icons (white versions) organized by category"""
