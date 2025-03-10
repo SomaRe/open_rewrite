@@ -249,7 +249,7 @@ class Application:
     def initialize(self):
         logging.debug('Application.initialize called')
         # Create window
-        html_path = resource_path(os.path.join('src', 'ui', 'index.html'))
+        html_path = resource_path(os.path.join('src', 'ui', 'app.html'))
         logging.debug(f'Application.initialize: html_path = {html_path}')
         
         # Create window with the API
