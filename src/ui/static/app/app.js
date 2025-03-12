@@ -94,6 +94,20 @@ function selectOption(option, category) {
     pywebview.api.rewrite_text(currentText, option, category);
 }
 
+function sendCustomRequest() {
+    const customInput = document.getElementById('custom-input').value.trim();
+    if (!customInput) return;
+    
+    document.getElementById('result-title').textContent = "Custom Request";
+    document.getElementById('options-view').classList.add('hidden');
+    document.getElementById('result-view').classList.remove('hidden');
+    
+    showLoading();
+    
+    // Use a special category 'custom' for custom requests
+    pywebview.api.rewrite_text(currentText, customInput, 'custom');
+}
+
 function openSettings() {
     pywebview.api.open_settings_window();
 }
