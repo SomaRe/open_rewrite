@@ -8,9 +8,9 @@
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
 </head>
 <body class="bg-zinc-800 text-white">
-    <div class="container mx-auto px-2">
+    <div class="container mx-auto px-2 relative">
         <!-- Title Bar -->
-        <div class="flex items-center justify-center pywebview-drag-region pt-1">
+        <div class="sticky top-0 z-50 bg-zinc-800 flex items-center justify-center pywebview-drag-region pt-1">
             <!-- Settings Dropdown -->
             <div class="relative">
                 <button class="p-2 rounded hover:bg-zinc-700" onclick="toggleSettingsMenu()">
@@ -36,7 +36,7 @@
         </div>
 
         <!-- Options View -->
-        <div id="options-view" class="mt-2">
+        <div id="options-view" class="mt-1">
             <!-- Custom Input Section -->
             <div class="mb-4">
                 <div class="flex items-center gap-2">
@@ -44,13 +44,13 @@
                         id="custom-input" 
                         type="text" 
                         placeholder="Type your custom request..."
-                        class="flex-1 p-2 rounded bg-zinc-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        class="flex-1 p-1 rounded bg-zinc-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
                     <button 
                         onclick="sendCustomRequest()"
                         class="p-2 rounded-full hover:bg-zinc-700"
                     >
-                        <img class="w-6" src="static/material_icons_round/content/round_send_black_48dp_white.png" alt="Send">
+                        <img class="w-4" src="static/material_icons_round/content/round_send_black_48dp_white.png" alt="Send">
                     </button>
                 </div>
             </div>
