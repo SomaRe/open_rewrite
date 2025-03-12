@@ -17,7 +17,12 @@ class SettingsAPI:
         logging.debug('SettingsAPI.__init__ called')
         self.settings_manager = settings_manager
         self.hotkey = hotkey
+        self._window = None
         logging.debug('SettingsAPI.__init__ finished')
+
+    def set_window(self, window):
+        """Set the window reference"""
+        self._window = window
 
     def get_settings(self):
         logging.debug('SettingsAPI.get_settings called')
@@ -110,12 +115,10 @@ class SettingsAPI:
 class WebViewAPI:
     def __init__(self, settings_manager, rewrite_manager, clipboard_handler, hotkey):
         logging.debug('WebViewAPI.__init__ called')
-        self.settings_manager = settings_manager
         self.rewrite_manager = rewrite_manager
         self.clipboard_handler = clipboard_handler
-        self.hotkey = hotkey
         self.openai_manager = OpenAIManager()
-        self.settings_api = SettingsAPI(self.settings_manager, self.hotkey)
+        self.settings_api = SettingsAPI(settings_manager, hotkey)
         self._window = None
         logging.debug('WebViewAPI.__init__ finished')
 
@@ -140,8 +143,8 @@ class WebViewAPI:
                 height=600,
                 js_api=self.settings_api,
                 background_color="#27272a"
-                # frameless=True,
             )
+            self.settings_api.set_window(settings_window)
             settings_window.show()
             logging.debug('WebViewAPI.create_settings_window: settings window created and shown')
         else:
@@ -196,40 +199,6 @@ class WebViewAPI:
         logging.debug('WebViewAPI.replace_text finished')
         return True
 
-    def save_settings(self, settings):
-        logging.debug(f'WebViewAPI.save_settings called with settings: {settings}')
-        """Save application settings"""
-        try:
-            # Validate required fields
-            if not all(key in settings for key in ['hotkey', 'api_key', 'base_url', 'model', 'system_message', 'tones', 'formats']):
-                raise ValueError("Missing required settings fields")
-            
-            # Update hotkey if changed
-            new_hotkey = settings.get('hotkey', '<ctrl>+r')
-            if new_hotkey != self.hotkey.hotkey_combination:
-                self.hotkey.update_hotkey(new_hotkey)
-            
-            # Save all settings
-            self.settings_manager.set_all(settings)
-            logging.debug('WebViewAPI.save_settings: settings saved successfully')
-            return True
-        except Exception as e:
-            logging.error(f"Error saving settings: {str(e)}")
-            return False
-
-    def reset_to_defaults(self):
-        logging.debug('WebViewAPI.reset_to_defaults called')
-        """Reset settings to defaults"""
-        self.settings_manager.reset_to_defaults()
-        logging.debug('WebViewAPI.reset_to_defaults finished')
-        return True
-
-    def close_window(self):
-        logging.debug('WebViewAPI.close_window called')
-        """Close the current window"""
-        webview.windows[0].hide()
-        logging.debug('WebViewAPI.close_window finished')
-        return True
 
     def exit_app(self):
         logging.debug('WebViewAPI.exit_app called')
