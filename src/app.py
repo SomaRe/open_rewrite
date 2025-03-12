@@ -20,6 +20,15 @@ class SettingsAPI:
         self._window = None
         logging.debug('SettingsAPI.__init__ finished')
 
+    def get_prompt(self, option, category):
+        """Get prompt for a specified option and category."""
+        logging.debug(f"Getting prompt for {category}.{option}")
+        settings = self.settings_manager.get_all()
+        if category in settings and option in settings[category]:
+            return settings[category][option]['prompt']
+        logging.warning(f"Prompt not found for {category}.{option}")
+        return None
+
     def set_window(self, window):
         """Set the window reference"""
         self._window = window
@@ -132,8 +141,8 @@ class WebViewAPI:
         html_path = resource_path(os.path.join('src', 'ui', 'settings.html'))
         existing_settings_windows = [w for w in webview.windows if w.title == "Settings"]
 
-        if webview.windows:
-            webview.windows[0].hide()
+        if self._window:
+            self._window.hide()
         
         if not existing_settings_windows:
             settings_window = webview.create_window(
@@ -155,7 +164,7 @@ class WebViewAPI:
     def get_settings(self):
         logging.debug('WebViewAPI.get_settings called')
         """Get application settings"""
-        settings = self.settings_manager.get_all()
+        settings = self.settings_api.get_settings()
         logging.debug(f'WebViewAPI.get_settings returning: {settings}')
         return settings
 
@@ -166,17 +175,17 @@ class WebViewAPI:
             # For custom requests, use the option as the prompt directly
             prompt = f"Rewrite the text as follows: {option}"
         else:
-            prompt = self.settings_manager.get_prompt(option, category)
+            prompt = self.settings_api.get_prompt(option, category)
         logging.debug(f'WebViewAPI.rewrite_text: prompt retrieved: {prompt}')
         
         def on_response(response):
             logging.debug(f'WebViewAPI.rewrite_text.on_response called with response: {response}')
-            webview.windows[0].evaluate_js(f"showResult({repr(response)})")
+            self._window.evaluate_js(f"showResult({repr(response)})")
             logging.debug('WebViewAPI.rewrite_text.on_response finished')
             
         def on_error(error):
             logging.error(f'WebViewAPI.rewrite_text.on_error called with error: {error}')
-            webview.windows[0].evaluate_js(f"showError({repr(str(error))})")
+            self._window.evaluate_js(f"showError({repr(str(error))})")
             logging.debug('WebViewAPI.rewrite_text.on_error finished')
             
         self.rewrite_manager.rewrite_text(text, prompt, on_response, on_error)
@@ -193,7 +202,7 @@ class WebViewAPI:
     def replace_text(self, text):
         logging.debug(f'WebViewAPI.replace_text called with text: {text}')
         """Replace selected text with new text"""
-        webview.windows[0].hide()
+        self._window.hide()
         time.sleep(0.1)
         self.clipboard_handler.replace_text(text)
         logging.debug('WebViewAPI.replace_text finished')
@@ -206,6 +215,14 @@ class WebViewAPI:
         if self._window:
             self._window.destroy()
         logging.debug('WebViewAPI.exit_app finished')
+        return True
+
+    def close_window(self):
+        logging.debug('WebViewAPI.close_window called')
+        """Hide the window"""
+        if self._window:
+            self._window.hide()
+        logging.debug('WebViewAPI.close_window finished')
         return True
 
     def open_settings_window(self):
@@ -241,7 +258,7 @@ class Application:
         logging.debug(f'Application.initialize: html_path = {html_path}')
         
         # Create window with the API
-        window = webview.create_window(
+        self._window = webview.create_window(
             'Open Rewrite',
             html_path,
             js_api=self.web_api,
@@ -253,7 +270,7 @@ class Application:
         )
 
         # Pass window reference to API
-        self.web_api.set_window(window)
+        self.web_api.set_window(self._window)
         logging.debug('Application.initialize: main window created')
 
         # Setup connections
@@ -273,8 +290,8 @@ class Application:
         """Handle copied text"""
         if text.strip():
             if webview.windows:
-                webview.windows[0].evaluate_js(f"showText({repr(text)})")
-                webview.windows[0].show()
+                self._window.evaluate_js(f"showText({repr(text)})")
+                self._window.show()
                 logging.debug('Application.on_text_copied: main window shown and text evaluated')
         logging.debug('Application.on_text_copied finished')
 

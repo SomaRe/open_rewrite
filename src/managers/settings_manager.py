@@ -79,13 +79,6 @@ class SettingsManager:
         self.settings = default_settings
         self.save_settings()
 
-    def get_prompt(self, option, category):
-        """Get prompt for a specified option and category."""
-        logging.debug(f"Getting prompt for {category}.{option}")
-        if category in self.settings and option in self.settings[category]:
-            return self.settings[category][option]['prompt']
-        logging.warning(f"Prompt not found for {category}.{option}")
-        return None
 
     def get_default_settings(self):
         """Return the default settings for the app."""
