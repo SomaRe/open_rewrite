@@ -4,6 +4,7 @@ build
 dist
 .aider*
 .env
+.venv
 __pycache__
 codesnap.yml
 settings.json

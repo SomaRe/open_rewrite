@@ -1,0 +1,23 @@
+[project]
+name = "open-rewrite"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "SomaRe",email = "shivatej82@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.11,<3.14"
+dependencies = [
+    "pywebview (>=5.4,<6.0)",
+    "cryptography (>=44.0.2,<45.0.0)",
+    "openai (>=1.66.2,<2.0.0)",
+    "pynput (>=1.8.0,<2.0.0)",
+    "pyperclip (>=1.9.0,<2.0.0)",
+    "pyinstaller (>=6.12.0,<7.0.0)",
+    "python-dotenv (>=1.0.1,<2.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
