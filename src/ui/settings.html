@@ -53,6 +53,11 @@
             <div id="general-section" class="space-y-6 hidden">
                 <div class="p-4">
                     <h3 class="text-xl font-semibold mb-4">General Settings</h3>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium mb-1" for="hotkey">Global Hotkey:</label>
+                        <input type="text" id="hotkey" class="w-full p-2 bg-zinc-900 border border-zinc-700 rounded" 
+                               placeholder="e.g., Ctrl+Shift+R">
+                    </div>
                     <div class="flex justify-between items-center">
                         <div>
                             <label class="block text-sm font-medium mb-1">Launch at Startup:</label>
@@ -71,6 +76,11 @@
                             <span id="reset-status" class="text-sm text-zinc-400">Restore all settings to default values</span>
                         </div>
                         <button class="bg-zinc-500 hover:bg-zinc-700 text-white font-bold py-2 px-4 rounded" onclick="resetToDefaults()">Reset to Defaults</button>
+                    </div>
+                    
+                    <!-- Add Save button -->
+                    <div class="flex justify-end mt-6">
+                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onclick="saveSettings()">Save</button>
                     </div>
                 </div>
             </div>

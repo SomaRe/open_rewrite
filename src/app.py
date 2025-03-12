@@ -13,9 +13,10 @@ from src.utils.resource_path import resource_path
 
 
 class SettingsAPI:
-    def __init__(self, settings_manager):
+    def __init__(self, settings_manager, hotkey):
         logging.debug('SettingsAPI.__init__ called')
         self.settings_manager = settings_manager
+        self.hotkey = hotkey
         logging.debug('SettingsAPI.__init__ finished')
 
     def get_settings(self):
@@ -27,9 +28,14 @@ class SettingsAPI:
     def save_settings(self, settings):
         logging.debug(f'SettingsAPI.save_settings called with settings: {settings}')
         try:
-            if not all(key in settings for key in ['api_key', 'base_url', 'model', 'system_message', 'tones', 'formats']):
+            if not all(key in settings for key in ['hotkey','api_key', 'base_url', 'model', 'system_message', 'tones', 'formats']):
                 raise ValueError("Missing required settings fields")
             
+            new_hotkey = settings.get('hotkey', '<ctrl>+r')
+            if new_hotkey != self.hotkey.hotkey_combination:
+                logging.debug(f"New hotkey found!")
+                self.hotkey.update_hotkey(new_hotkey)
+
             self.settings_manager.set_all(settings)
             logging.debug('SettingsAPI.save_settings: settings saved successfully')
             return True
@@ -102,13 +108,14 @@ class SettingsAPI:
         return {k: sorted(v) for k, v in icons.items()}
 
 class WebViewAPI:
-    def __init__(self, settings_manager, rewrite_manager, clipboard_handler):
+    def __init__(self, settings_manager, rewrite_manager, clipboard_handler, hotkey):
         logging.debug('WebViewAPI.__init__ called')
         self.settings_manager = settings_manager
         self.rewrite_manager = rewrite_manager
         self.clipboard_handler = clipboard_handler
+        self.hotkey = hotkey
         self.openai_manager = OpenAIManager()
-        self.settings_api = SettingsAPI(self.settings_manager)
+        self.settings_api = SettingsAPI(self.settings_manager, self.hotkey)
         self._window = None
         logging.debug('WebViewAPI.__init__ finished')
 
@@ -194,8 +201,13 @@ class WebViewAPI:
         """Save application settings"""
         try:
             # Validate required fields
-            if not all(key in settings for key in ['api_key', 'base_url', 'model', 'system_message', 'tones', 'formats']):
+            if not all(key in settings for key in ['hotkey', 'api_key', 'base_url', 'model', 'system_message', 'tones', 'formats']):
                 raise ValueError("Missing required settings fields")
+            
+            # Update hotkey if changed
+            new_hotkey = settings.get('hotkey', '<ctrl>+r')
+            if new_hotkey != self.hotkey.hotkey_combination:
+                self.hotkey.update_hotkey(new_hotkey)
             
             # Save all settings
             self.settings_manager.set_all(settings)
@@ -239,14 +251,17 @@ class Application:
         self.settings_manager = SettingsManager()
         self.openai_manager = OpenAIManager()
         self.clipboard_handler = ClipboardHandler()
-        self.hotkey = GlobalHotKey()
+        self.hotkey = GlobalHotKey(
+            self.settings_manager.get('hotkey', '<ctrl>+r')
+        )
         
         # Create the API instance
         self.rewrite_manager = RewriteManager(self.openai_manager, self.settings_manager, self.clipboard_handler)
         self.web_api = WebViewAPI(
             self.settings_manager,
             self.rewrite_manager,
-            self.clipboard_handler
+            self.clipboard_handler,
+            self.hotkey
         )
         logging.debug('Application.__init__ finished')
 

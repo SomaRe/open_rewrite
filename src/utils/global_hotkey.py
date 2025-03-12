@@ -2,14 +2,26 @@ from pynput import keyboard
 import logging
 
 class GlobalHotKey:
-    def __init__(self):
+    def __init__(self, initial_hotkey='<ctrl>+r'):
         logging.debug('GlobalHotKey.__init__ called')
         self.callbacks = []
+        self.hotkey_combination = initial_hotkey
+        self.listener = None
+        self.start_listener()
+        logging.debug('GlobalHotKey.__init__ finished')
+
+    def start_listener(self):
+        if self.listener:
+            self.listener.stop()
         self.listener = keyboard.GlobalHotKeys({
-            '<ctrl>+r': self.on_activate
+            self.hotkey_combination: self.on_activate
         })
         self.listener.start()
-        logging.debug('GlobalHotKey.__init__ finished')
+
+    def update_hotkey(self, new_combination):
+        logging.debug(f'Updating hotkey to {new_combination}')
+        self.hotkey_combination = new_combination
+        self.start_listener()
         
     def connect(self, callback):
         logging.debug('GlobalHotKey.connect called')

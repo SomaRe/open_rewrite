@@ -35,6 +35,7 @@ export function toggleStartup() {
 export function loadSettings() {
     pywebview.api.get_settings().then(settings => {
         checkStartupStatus();
+        document.getElementById('hotkey').value = settings.hotkey || '<ctrl>+r';
         document.getElementById('api_key').value = settings.api_key || '';
         document.getElementById('base_url').value = settings.base_url || 'https://api.openai.com/v1';
         document.getElementById('model').value = settings.model || 'gpt-4o-mini';
@@ -58,6 +59,7 @@ export function loadSettings() {
 
 export function saveSettings() {
     const settings = {
+        hotkey: document.getElementById('hotkey').value,
         api_key: document.getElementById('api_key').value,
         base_url: document.getElementById('base_url').value,
         model: document.getElementById('model').value,

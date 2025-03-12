@@ -91,6 +91,7 @@ class SettingsManager:
         """Return the default settings for the app."""
         logging.debug("Getting default settings")
         return {
+            'hotkey': '<ctrl>+r',
             'api_key': '',
             'base_url': 'https://api.openai.com/v1/',
             'model': 'gpt-4o-mini',
