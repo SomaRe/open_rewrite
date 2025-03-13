@@ -10,6 +10,9 @@ on:
 jobs:
   build:
     runs-on: windows-latest
+    defaults:
+      run:
+        shell: bash
     steps:
     - uses: actions/checkout@v4
     
@@ -30,6 +33,7 @@ jobs:
     
     - name: Build with PyInstaller
       run: |
+        source $VENV
         pyinstaller open-rewrite-windows-x64.spec
     
     - name: Upload executable
