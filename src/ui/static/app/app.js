@@ -7,6 +7,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // Function to execute after pywebview is ready
     function initializeApp() {
         loadOptions();
+        
+        // Set focus after everything is loaded
+        const inputField = document.getElementById('custom-input-field');
+        if (inputField) {
+            inputField.focus();
+        }
+        
+        // Add Enter key handler
+        document.getElementById('custom-input-field').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendCustomRequest();
+            }
+        });
     
         // Close settings menu when clicking outside
         document.addEventListener('click', function(event) {
@@ -95,7 +108,7 @@ function selectOption(option, category) {
 }
 
 function sendCustomRequest() {
-    const customInput = document.getElementById('custom-input').value.trim();
+    const customInput = document.getElementById('custom-input-field')?.value.trim();
     if (!customInput) return;
     
     document.getElementById('result-title').textContent = "Custom Request";
