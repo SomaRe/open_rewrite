@@ -290,7 +290,7 @@ class Application:
         """Handle copied text"""
         if text.strip():
             if webview.windows:
-                self._window.evaluate_js(f"showText({repr(text)})")
+                self._window.evaluate_js(f"handleSelectedText({repr(text)})")
                 self._window.show()
                 logging.debug('Application.on_text_copied: main window shown and text evaluated')
         logging.debug('Application.on_text_copied finished')

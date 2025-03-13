@@ -7,12 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Function to execute after pywebview is ready
     function initializeApp() {
         loadOptions();
-        
-        // Set focus after everything is loaded
-        const inputField = document.getElementById('custom-input-field');
-        if (inputField) {
-            inputField.focus();
-        }
+        focusInput();
         
         // Add Enter key handler
         document.getElementById('custom-input-field').addEventListener('keypress', function(e) {
@@ -125,11 +120,25 @@ function openSettings() {
     pywebview.api.open_settings_window();
 }
 
-// Show text in the UI
-function showText(text) {
+// Handle selected text in the UI
+function handleSelectedText(text) {
     currentText = text;
     document.getElementById('options-view').classList.remove('hidden');
     document.getElementById('result-view').classList.add('hidden');
+    
+    // Clear and focus the input field
+    const inputField = document.getElementById('custom-input-field');
+    if (inputField) {
+        inputField.value = '';
+        inputField.focus();
+    }
+}
+
+function focusInput() {
+    const inputField = document.getElementById('custom-input-field');
+    if (inputField) {
+        inputField.focus();
+    }
 }
 
 // Show options view
