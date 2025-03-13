@@ -89,6 +89,9 @@ class SettingsManager:
             'base_url': 'https://api.openai.com/v1/',
             'model': 'gpt-4o-mini',
             'system_message': "You are a helpful tool called Open Rewrite, your main purpose is to rewrite the text as instructions given by the user, do not add any extra information or add any new information, just rewrite",
+            'custom_system_message': (
+                "You are a helpful tool called Open Rewrite. Follow the user's custom instructions exactly as provided."
+            ),
             'tones': {
                 "Friendly": {
                     "prompt": "Rewrite the text in a friendly tone. Ensure it sounds approachable and warm. Do not assume anything or add any new information. don't use funky words.",

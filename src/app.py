@@ -171,11 +171,7 @@ class WebViewAPI:
     def rewrite_text(self, text, option, category):
         logging.debug(f'WebViewAPI.rewrite_text called with text: {text[:20]+"..."}, option: {option}, category: {category}')
         """Rewrite text using selected option"""
-        if category == 'custom':
-            # For custom requests, use the option as the prompt directly
-            prompt = f"Rewrite the text as follows: {option}"
-        else:
-            prompt = self.settings_api.get_prompt(option, category)
+        prompt = self.settings_api.get_prompt(option, category)
         logging.debug(f'WebViewAPI.rewrite_text: prompt retrieved: {prompt}')
         
         def on_response(response):
@@ -190,6 +186,24 @@ class WebViewAPI:
             
         self.rewrite_manager.rewrite_text(text, prompt, on_response, on_error)
         logging.debug('WebViewAPI.rewrite_text finished')
+        return True
+
+    def handle_custom_request(self, text, custom_prompt):
+        logging.debug(f'WebViewAPI.handle_custom_request called with text: {text}, prompt: {custom_prompt}')
+        """Handle custom user requests through dedicated endpoint"""
+        
+        def on_response(response):
+            logging.debug(f'WebViewAPI.handle_custom_request.on_response called with response: {response}')
+            self._window.evaluate_js(f"showResult({repr(response)})")
+            logging.debug('WebViewAPI.handle_custom_request.on_response finished')
+            
+        def on_error(error):
+            logging.error(f'WebViewAPI.handle_custom_request.on_error called with error: {error}')
+            self._window.evaluate_js(f"showError({repr(str(error))})")
+            logging.debug('WebViewAPI.handle_custom_request.on_error finished')
+            
+        self.rewrite_manager.handle_custom_request(text, custom_prompt, on_response, on_error)
+        logging.debug('WebViewAPI.handle_custom_request finished')
         return True
 
     def copy_to_clipboard(self, text):

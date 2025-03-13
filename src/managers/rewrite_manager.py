@@ -35,3 +35,29 @@ class RewriteManager:
         """Replace the selected text with the rewritten text"""
         self.clipboard_handler.replace_text(text)
         logging.debug('RewriteManager.replace_text finished')
+
+    def handle_custom_request(self, text, custom_prompt, on_success, on_error):
+        """Handle custom user requests with dedicated system message"""
+        if text.strip() == '':
+            on_error('No text selected or found, please try again!')
+            return
+
+        logging.debug(f'Handling custom request with text: {text}, prompt: {custom_prompt}')
+        
+        # Get custom system message from settings
+        custom_system_message = self.settings_manager.get('custom_system_message')
+        
+        api_key = self.settings_manager.get('api_key')
+        base_url = self.settings_manager.get('base_url')
+        model = self.settings_manager.get('model')
+
+        self.llm_manager.generate_response(
+            api_key=api_key,
+            base_url=base_url,
+            model=model,
+            system_message=custom_system_message,
+            prompt=custom_prompt,
+            selected_text=text,
+            on_success=on_success,
+            on_error=on_error
+        )

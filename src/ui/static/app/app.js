@@ -1,6 +1,21 @@
+import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
+
 // Global variables
 let currentText = '';
 let currentResult = '';
+
+function focusInput() {
+    const inputField = document.getElementById('custom-input-field');
+    if (inputField) {
+        inputField.focus();
+    }
+}
+window.focusInput = focusInput;
+
+// Expose functions to pywebview
+window.handleSelectedText = handleSelectedText;
+window.showResult = showResult;
+window.showError = showError;
 
 // Initialize the app
 document.addEventListener('DOMContentLoaded', () => {
@@ -104,7 +119,10 @@ function selectOption(option, category) {
 
 function sendCustomRequest() {
     const customInput = document.getElementById('custom-input-field')?.value.trim();
-    if (!customInput) return;
+    if (!customInput) {
+        showError('Please enter a custom request');
+        return;
+    }
     
     document.getElementById('result-title').textContent = "Custom Request";
     document.getElementById('options-view').classList.add('hidden');
@@ -112,8 +130,7 @@ function sendCustomRequest() {
     
     showLoading();
     
-    // Use a special category 'custom' for custom requests
-    pywebview.api.rewrite_text(currentText, customInput, 'custom');
+    pywebview.api.handle_custom_request(currentText, customInput);
 }
 
 function openSettings() {
@@ -130,13 +147,6 @@ function handleSelectedText(text) {
     const inputField = document.getElementById('custom-input-field');
     if (inputField) {
         inputField.value = '';
-        inputField.focus();
-    }
-}
-
-function focusInput() {
-    const inputField = document.getElementById('custom-input-field');
-    if (inputField) {
         inputField.focus();
     }
 }
@@ -161,7 +171,9 @@ function hideLoading() {
 // Show result
 function showResult(result) {
     currentResult = result;
-    document.getElementById('result-text').textContent = result;
+    // Convert markdown to HTML using marked
+    const htmlContent = marked.parse(result);
+    document.getElementById('result-text').innerHTML = htmlContent;
     hideLoading();
 }
 

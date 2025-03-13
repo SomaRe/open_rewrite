@@ -9,9 +9,11 @@
 
 ✅ Fix autofocus when triggering it through shortcut key.
 
-🔄 manual result selection with user-select.
+✅ manual result selection with user-select.
 
 🔄 Auto Height scaling.
+
+🔄 Replace cdn's with local.
 
 # Extra Future:
 
