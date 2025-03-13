@@ -34,7 +34,7 @@ class OpenAIManager:
 
                 messages = [
                     {"role": "system", "content": system_message},
-                    {"role": "user", "content": f"{prompt}\n{selected_text}"}
+                    {"role": "user", "content": f"<prompt>{prompt}</prompt>\n<text>{selected_text}</text>"}
                 ]
 
                 response = client.chat.completions.create(

@@ -169,7 +169,7 @@ class WebViewAPI:
         return settings
 
     def rewrite_text(self, text, option, category):
-        logging.debug(f'WebViewAPI.rewrite_text called with text: {text}, option: {option}, category: {category}')
+        logging.debug(f'WebViewAPI.rewrite_text called with text: {text[:20]+"..."}, option: {option}, category: {category}')
         """Rewrite text using selected option"""
         if category == 'custom':
             # For custom requests, use the option as the prompt directly

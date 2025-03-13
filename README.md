@@ -10,3 +10,9 @@
 ✅ Fix autofocus when triggering it through shortcut key.
 
 🔄 manual result selection with user-select.
+
+🔄 Auto Height scaling.
+
+# Extra Future:
+
+🔄 MCP support
