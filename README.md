@@ -13,8 +13,12 @@
 
 🔄 Auto Height scaling.
 
+🔄 Markdown css needs enhancements
+
 🔄 Replace cdn's with local.
 
 # Extra Future:
 
 🔄 MCP support
+
+🔄 Streaming output.

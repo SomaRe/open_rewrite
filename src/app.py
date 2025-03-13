@@ -280,7 +280,8 @@ class Application:
             height=400,
             on_top=True,
             frameless=True,
-            background_color="#27272a"
+            background_color="#27272a",
+            hidden=True
         )
 
         # Pass window reference to API
