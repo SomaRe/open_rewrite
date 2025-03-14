@@ -15,7 +15,6 @@ graph LR
     G -- Copies/Replaces Text --> A;
     H -- Activates Application --> B;
     E -- Stores Configuration --> D;
-    style B fill:#f9f,stroke:#333,stroke-width:2px
 ```
 
 ## Open Rewrite
