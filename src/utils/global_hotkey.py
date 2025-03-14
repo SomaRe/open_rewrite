@@ -2,7 +2,7 @@ from pynput import keyboard
 import logging
 
 class GlobalHotKey:
-    def __init__(self, initial_hotkey='<ctrl>+r'):
+    def __init__(self, initial_hotkey='<alt>+r'):
         logging.debug('GlobalHotKey.__init__ called')
         self.callbacks = []
         self.hotkey_combination = initial_hotkey

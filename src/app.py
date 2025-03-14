@@ -45,7 +45,7 @@ class SettingsAPI:
             if not all(key in settings for key in ['hotkey','api_key', 'base_url', 'model', 'system_message', 'tones', 'formats']):
                 raise ValueError("Missing required settings fields")
             
-            new_hotkey = settings.get('hotkey', '<ctrl>+r')
+            new_hotkey = settings.get('hotkey', '<alt>+r')
             if new_hotkey != self.hotkey.hotkey_combination:
                 logging.debug(f"New hotkey found!")
                 self.hotkey.update_hotkey(new_hotkey)
@@ -252,7 +252,7 @@ class Application:
         self.openai_manager = OpenAIManager()
         self.clipboard_handler = ClipboardHandler()
         self.hotkey = GlobalHotKey(
-            self.settings_manager.get('hotkey', '<ctrl>+r')
+            self.settings_manager.get('hotkey', '<alt>+r')
         )
         
         # Create the API instance
