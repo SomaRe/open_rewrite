@@ -6,11 +6,12 @@
     "configurations": [
 
         {
-            "name": "Python Main",
+            "name": "Main",
             "type": "debugpy",
             "request": "launch",
             "program": "main.py",
-            "console": "integratedTerminal"
+            "console": "integratedTerminal",
+            "preLaunchTask": "start-tailwind"
         }
     ]
 }

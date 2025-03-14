@@ -1,3 +1,9 @@
+# Basic Overview:
+
+- pywebview is used to create a GUI.
+- Using tailwind executable to generate the css.
+
+
 # Future:
 🔄 Explore keyring package/module to store API keys in a more secure way.
 
