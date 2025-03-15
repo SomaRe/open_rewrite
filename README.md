@@ -61,6 +61,10 @@ This application is built using the following technologies:
 - **Tailwind CSS CLI**: Used in development to watch for changes in CSS files and rebuild the main.css stylesheet.
 - **VSCode with debugpy**: Development environment configured for debugging Python code and running Tailwind CSS in watch mode.
 
+# Extra:
+
+- **Fixed Sizes for UI for app.html**: header is 44px(2.75rem), custom-input is 44px(2.75rem), separator is 18px(0.25rem height + 0.5rem total margin), individual option is 28px(1.75rem).
+
 # Future:
 🔄 Explore keyring package/module to store API keys in a more secure way.
 

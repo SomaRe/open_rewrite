@@ -79,8 +79,8 @@ function loadOptions() {
         });
 
         // Add separator
-        const separator = document.createElement('hr');
-        separator.className = 'border-zinc-700 my-2';
+        const separator = document.createElement('div');
+        separator.className = 'h-0.5 w-full rounded bg-zinc-700 my-2';
         optionsContainer.appendChild(separator);
 
         // Load formats
@@ -95,7 +95,7 @@ function loadOptions() {
 
 function createOptionButton(name, icon, category) {
     const button = document.createElement('button');
-    button.className = 'flex items-center w-full p-1 hover:bg-zinc-700 transition-colors text-left';
+    button.className = 'flex items-center w-full p-1 h-7 hover:bg-zinc-700 transition-colors text-left';
     button.innerHTML = `
         <img class="w-4 h-4 mr-2" src="${icon}" alt="${name}">
         <span class="text-sm">${name}</span>
