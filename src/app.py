@@ -222,7 +222,6 @@ class WebViewAPI:
         logging.debug('WebViewAPI.replace_text finished')
         return True
 
-
     def exit_app(self):
         logging.debug('WebViewAPI.exit_app called')
         """Exit the application"""
@@ -277,7 +276,7 @@ class Application:
             html_path,
             js_api=self.web_api,
             width=300,
-            height=400,
+            height=425,
             on_top=True,
             frameless=True,
             background_color="#27272a",

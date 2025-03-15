@@ -74,13 +74,16 @@ This application is built using the following technologies:
 
 ✅ manual result selection with user-select.
 
-🔄 Auto Height scaling.
+🔄 Auto Height scaling using fixed sizes.
 
 🔄 Markdown css needs enhancements
 
 🔄 Replace cdn's with local.
 
 # Extra Future:
+
+
+🔄 Auto Height scaling synamically. (Tried, lots of issues, needs more exploring)
 
 🔄 MCP support
 
