@@ -53,9 +53,13 @@ function showError(error) {
     hideLoading();
 }
 
-function toggleSettingsMenu() {
+function toggleSettingsMenu(hideOnly = false) {
     const menu = document.getElementById('settings-menu');
-    menu.classList.toggle('hidden');
+    if (hideOnly) {
+        menu.classList.add('hidden');
+    } else {
+        menu.classList.toggle('hidden');
+    }
 }
 
 function openSettings() {
@@ -179,8 +183,14 @@ window.showResult = showResult;
 window.showError = showError;
 window.toggleSettingsMenu = toggleSettingsMenu;
 window.showOptionsView = showOptionsView;
-window.openSettings = openSettings;
-window.exitApp = exitApp;
+window.openSettings = () => {
+    openSettings();
+    toggleSettingsMenu(true);
+};
+window.exitApp = () => {
+    exitApp();
+    toggleSettingsMenu(true);
+};
 window.copyResult = copyResult;
 window.replaceResult = replaceResult;
 window.sendCustomRequest = sendCustomRequest;

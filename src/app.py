@@ -287,7 +287,7 @@ class Application:
             extra_height = 0
         
         # Total height is sum of all components
-        total_height = header_height + input_height + separator_height + options_height + extra_height + 10
+        total_height = header_height + input_height + separator_height + options_height + extra_height + 25
         
         # Add some padding
         return min(max(total_height, 300), 800)  # Keep between 300-800px
