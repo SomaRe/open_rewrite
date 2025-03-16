@@ -64,6 +64,10 @@ This application is built using the following technologies:
 # Extra:
 
 - **Fixed Sizes for UI for app.html**: header is 44px(2.75rem), custom-input is 44px(2.75rem), separator is 18px(0.25rem height + 0.5rem total margin), individual option is 28px(1.75rem).
+- **size differences in wdifferent os**: 
+  - **Windows**: width is 22px smaller and height is 56px smaller.
+  - **MacOS**: height is 28px smaller.
+  - **Linux**: Perfectly fits.
 
 # Future:
 🔄 Explore keyring package/module to store API keys in a more secure way.

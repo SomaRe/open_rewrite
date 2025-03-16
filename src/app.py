@@ -264,11 +264,42 @@ class Application:
         )
         logging.debug('Application.__init__ finished')
 
+    def calculate_window_height(self):
+        """Calculate window height based on number of options"""
+        # Fixed heights
+        header_height = 44  # 2.75rem
+        input_height = 44   # 2.75rem
+        separator_height = 18  # 0.25rem + margins
+        
+        # Get number of options
+        settings = self.settings_manager.get_all()
+        num_tones = len(settings.get('tones', {}))
+        num_formats = len(settings.get('formats', {}))
+        total_options = num_tones + num_formats
+        
+        # Each option is 28px (1.75rem)
+        options_height = total_options * 28
+
+        # Extra height because of header.
+        if sys.platform == "win32": # windows
+            extra_height = 56
+        else:
+            extra_height = 0
+        
+        # Total height is sum of all components
+        total_height = header_height + input_height + separator_height + options_height + extra_height + 10
+        
+        # Add some padding
+        return min(max(total_height, 300), 800)  # Keep between 300-800px
+
     def initialize(self):
         logging.debug('Application.initialize called')
         # Create window
         html_path = resource_path(os.path.join('src', 'ui', 'app.html'))
         logging.debug(f'Application.initialize: html_path = {html_path}')
+        
+        # Calculate dynamic height
+        window_height = self.calculate_window_height()
         
         # Create window with the API
         self._window = webview.create_window(
@@ -276,7 +307,7 @@ class Application:
             html_path,
             js_api=self.web_api,
             width=300,
-            height=425,
+            height=window_height,
             on_top=True,
             frameless=True,
             background_color="#27272a",
