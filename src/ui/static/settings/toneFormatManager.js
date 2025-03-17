@@ -34,6 +34,9 @@ export function showNewToneForm() {
         tonesList.appendChild(originalToneElement);
         originalToneElement = null;
     }
+    
+    // Scroll to the form with smooth animation
+    form.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 export function hideNewToneForm() {
@@ -82,6 +85,9 @@ export function showNewFormatForm() {
         formatsList.appendChild(originalFormatElement);
         originalFormatElement = null;
     }
+    
+    // Scroll to the form with smooth animation
+    form.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function hideNewItemForm(type) {
