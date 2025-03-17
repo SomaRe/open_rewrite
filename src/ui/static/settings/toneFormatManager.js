@@ -28,6 +28,12 @@ let originalToneElement = null;
 export function showNewToneForm() {
     const form = document.getElementById('new-tone-form');
     form.classList.remove('hidden');
+    
+    if (originalToneElement) {
+        const tonesList = document.getElementById('tones-list');
+        tonesList.appendChild(originalToneElement);
+        originalToneElement = null;
+    }
 }
 
 export function hideNewToneForm() {
