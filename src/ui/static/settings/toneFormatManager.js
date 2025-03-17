@@ -67,7 +67,8 @@ export function showNewFormatForm() {
     const form = document.getElementById('new-format-form');
     form.classList.remove('hidden');
     document.getElementById('new-format-name').value = "";
-    document.getElementById('new-format-icon').value = "";
+    document.getElementById('new-format-icon-preview').src = "";
+    document.getElementById('new-format-icon-preview').style.display = 'none';
     document.getElementById('new-format-prompt').value = "";
 
     if (originalFormatElement) {
@@ -81,7 +82,8 @@ function hideNewItemForm(type) {
     const form = document.getElementById(`new-${type}-form`);
     form.classList.add('hidden');
     document.getElementById(`new-${type}-name`).value = "";
-    document.getElementById(`new-${type}-icon`).value = "";
+    document.getElementById(`new-${type}-icon-preview`).src = "";
+    document.getElementById(`new-${type}-icon-preview`).style.display = 'none';
     document.getElementById(`new-${type}-prompt`).value = "";
     if (window[`original${type.charAt(0).toUpperCase() + type.slice(1)}Element`]) {
         const list = document.getElementById(`${type}s-list`);
@@ -96,7 +98,7 @@ export function hideNewFormatForm() {
 
 function addNewItem(type) {
     const name = document.getElementById(`new-${type}-name`).value;
-    const icon = document.getElementById(`new-${type}-icon`).value;
+    const icon = document.getElementById(`new-${type}-icon-preview`).src;
     const prompt = document.getElementById(`new-${type}-prompt`).value;
 
     if (name && icon && prompt) {
