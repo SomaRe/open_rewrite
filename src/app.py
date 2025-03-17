@@ -51,6 +51,12 @@ class SettingsAPI:
                 self.hotkey.update_hotkey(new_hotkey)
 
             self.settings_manager.set_all(settings)
+            
+            # Notify MAIN window to refresh content
+            if webview.windows and len(webview.windows) > 0:
+                main_window = webview.windows[0]  # Main window is always first
+                main_window.evaluate_js("refreshOptions()")
+                
             logging.debug('SettingsAPI.save_settings: settings saved successfully')
             return True
         except Exception as e:

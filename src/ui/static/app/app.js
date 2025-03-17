@@ -71,27 +71,36 @@ function exitApp() {
 }
 
 function loadOptions() {
-    console.log('Attempting to get settings');
+    console.log('Loading options...');
     pywebview.api.get_settings().then(settings => {
         const optionsContainer = document.getElementById('options-container');
+        // Clear existing options
         optionsContainer.innerHTML = '';
 
         // Load tones
-        Object.entries(settings.tones).forEach(([name, data]) => {
-            const button = createOptionButton(name, data.icon, 'tones');
-            optionsContainer.appendChild(button);
-        });
+        if (settings.tones) {
+            Object.entries(settings.tones).forEach(([name, data]) => {
+                const button = createOptionButton(name, data.icon, 'tones');
+                optionsContainer.appendChild(button);
+            });
+        }
 
-        // Add separator
-        const separator = document.createElement('div');
-        separator.className = 'h-0.5 w-full rounded bg-zinc-700 my-2';
-        optionsContainer.appendChild(separator);
+        // Add separator if there are both tones and formats
+        if (settings.tones && settings.formats && 
+            Object.keys(settings.tones).length > 0 && 
+            Object.keys(settings.formats).length > 0) {
+            const separator = document.createElement('div');
+            separator.className = 'h-0.5 w-full rounded bg-zinc-700 my-2';
+            optionsContainer.appendChild(separator);
+        }
 
         // Load formats
-        Object.entries(settings.formats).forEach(([name, data]) => {
-            const button = createOptionButton(name, data.icon, 'formats');
-            optionsContainer.appendChild(button);
-        });
+        if (settings.formats) {
+            Object.entries(settings.formats).forEach(([name, data]) => {
+                const button = createOptionButton(name, data.icon, 'formats');
+                optionsContainer.appendChild(button);
+            });
+        }
     }).catch(error => {
         console.error('Error getting settings:', error);
     });
@@ -195,6 +204,7 @@ window.copyResult = copyResult;
 window.replaceResult = replaceResult;
 window.sendCustomRequest = sendCustomRequest;
 window.selectOption = selectOption;
+window.refreshOptions = loadOptions;
 
 // Wait for DOM to be ready
 document.addEventListener('DOMContentLoaded', () => {
