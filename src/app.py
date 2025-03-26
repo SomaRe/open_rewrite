@@ -195,7 +195,7 @@ class WebViewAPI:
         return True
 
     def handle_custom_request(self, text, custom_prompt):
-        logging.debug(f'WebViewAPI.handle_custom_request called with text: {text}, prompt: {custom_prompt}')
+        logging.debug(f'WebViewAPI.handle_custom_request called with text: {text[:20]+"..."}, prompt: {custom_prompt}')
         """Handle custom user requests through dedicated endpoint"""
         
         def on_response(response):
