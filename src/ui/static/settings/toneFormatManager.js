@@ -75,10 +75,6 @@ let originalFormatElement = null;
 export function showNewFormatForm() {
     const form = document.getElementById('new-format-form');
     form.classList.remove('hidden');
-    document.getElementById('new-format-name').value = "";
-    document.getElementById('new-format-icon-preview').src = "";
-    document.getElementById('new-format-icon-preview').style.display = 'none';
-    document.getElementById('new-format-prompt').value = "";
 
     if (originalFormatElement) {
         const formatsList = document.getElementById('formats-list');

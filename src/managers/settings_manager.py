@@ -18,8 +18,7 @@ class SettingsManager:
                 for category in ['tones', 'formats']:
                     if category in settings:
                         for option in settings[category]:
-                            icon_path = settings[category][option].get('icon', '')
-                            settings[category][option]['icon'] = icon_path
+                            settings[category][option].setdefault('icon', 'static\material_icons_round\toggle\round_radio_button_checked_black_48dp_white.png')
                 return settings
         except FileNotFoundError:
             logging.warning(f"Settings file not found at {self.settings_file}, creating with defaults")
