@@ -43,10 +43,12 @@ class OpenAIManager:
                     temperature=0.7,
                 )
 
-                logger.debug(f"response: {response[:20]+'...'}")
+                reply = response.choices[0].message.content
+
+                logger.debug(f"response: {reply[:20]+'...'}")
 
                 # Call the success callback with the response
-                on_success(response.choices[0].message.content)
+                on_success(reply)
                 logger.debug('run_openai_call success callback finished')
 
             except Exception as e:
