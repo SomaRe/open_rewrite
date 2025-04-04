@@ -5,7 +5,11 @@ a = Analysis(
     ['main.py'],
     pathex=[],
     binaries=[],
-    datas=[('src/ui', 'src/ui'), ('src/updater.py', '.')],
+    datas=[
+        ('src/ui', 'src/ui'),
+        ('src/updater.py', '.'),
+        ('pyproject.toml', '.')
+        ],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
