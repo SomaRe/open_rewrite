@@ -97,7 +97,7 @@ jobs:
       id: compare_versions
       env:
         CURRENT_VERSION: ${{ needs.build.outputs.app_version }}
-        LATEST_TAG_VERSION: ${{ steps.get_latest_tag.outputs.result }}
+        LATEST_TAG_VERSION: ${{ fromJson(steps.get_latest_tag.outputs.result) }}
       run: |
         echo "Current pyproject version: $CURRENT_VERSION"
         echo "Latest release tag version: $LATEST_TAG_VERSION"
