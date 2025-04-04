@@ -78,6 +78,22 @@
                         </div>
                         <button class="bg-zinc-500 hover:bg-zinc-700 text-white font-bold py-2 px-4 rounded" onclick="resetToDefaults()">Reset to Defaults</button>
                     </div>
+                    <div class="mt-6 border-t border-zinc-700 pt-6">
+                        <h4 class="text-lg font-semibold mb-2">Application Updates</h4>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <label class="block text-sm font-medium mb-1">Check for Updates:</label>
+                                <span id="update-status" class="text-sm text-zinc-400">Current Version: <span id="current-version-display">?.?.?</span></span>
+                            </div>
+                            <button id="check-update-button" class="bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded text-sm" onclick="checkForUpdate()">Check for Updates</button>
+                        </div>
+                        <div id="update-result" class="mt-2 text-sm text-zinc-300"></div>
+                        <div id="release-notes-container" class="mt-2 hidden">
+                             <h5 class="text-md font-semibold mb-1">Release Notes:</h5>
+                             <div id="release-notes-content" class="text-sm bg-zinc-900 p-3 rounded border border-zinc-700 max-h-40 overflow-y-auto"></div>
+                             <button id="install-update-button" class="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm">Download & Install Update</button>
+                        </div>
+                    </div>
                     
                     <!-- Add Save button -->
                     <div class="flex justify-end mt-6">

@@ -4,6 +4,9 @@ import webview
 import logging
 import winreg as reg
 import sys
+import requests
+import subprocess
+import tempfile
 from src.managers.settings_manager import SettingsManager
 from src.managers.llm.openai_manager import OpenAIManager
 from src.managers.rewrite_manager import RewriteManager
@@ -11,6 +14,14 @@ from src.utils.global_hotkey import GlobalHotKey
 from src.utils.clipboard_handler import ClipboardHandler
 from src.utils.resource_path import resource_path
 
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+
+try:
+    from . import __version__ as CURRENT_APP_VERSION
+    logging.info(f"Current app version: {CURRENT_APP_VERSION}")
+except ImportError:
+    logging.warning("_version.py not found. Falling back to '0.0.0-dev'.")
+    CURRENT_APP_VERSION = "0.0.0-dev"
 
 class SettingsAPI:
     def __init__(self, settings_manager, hotkey):
@@ -19,6 +30,126 @@ class SettingsAPI:
         self.hotkey = hotkey
         self._window = None
         logging.debug('SettingsAPI.__init__ finished')
+
+    def get_current_version(self):
+        """Returns the hardcoded current application version."""
+        logging.info(f"Reporting current app version: {CURRENT_APP_VERSION}")
+        return CURRENT_APP_VERSION
+
+    def check_for_update(self):
+        """Checks GitHub for the latest release and compares versions."""
+        logging.info("Checking for updates...")
+        repo = "SomaRe/open_rewrite"
+        api_url = f"https://api.github.com/repos/{repo}/releases/latest"
+        asset_name = "open-rewrite-windows-x64.exe"
+
+        try:
+            response = requests.get(api_url, timeout=10)
+            response.raise_for_status()
+            latest_release = response.json()
+            logging.debug(f"Latest release data: {latest_release}")
+            latest_version = latest_release.get("tag_name", "0.0.0").lstrip('v') # Remove leading 'v' if present
+            assets = latest_release.get("assets", [])
+
+            logging.debug(f"Latest release tag: {latest_version}, Current version: {CURRENT_APP_VERSION}")
+
+            # Simple version comparison (can be improved with packaging.version)
+            if latest_version > CURRENT_APP_VERSION:
+                logging.info(f"Update found: {latest_version}")
+                download_url = None
+                for asset in assets:
+                    if asset.get("name") == asset_name:
+                        download_url = asset.get("browser_download_url")
+                        break
+
+                if download_url:
+                    logging.info(f"Asset found: {asset_name} at {download_url}")
+                    return {
+                        "update_available": True,
+                        "latest_version": latest_version,
+                        "download_url": download_url,
+                        "release_notes": latest_release.get("body", "No release notes available.")
+                    }
+                else:
+                    logging.warning(f"Update found ({latest_version}), but asset '{asset_name}' not found in latest release.")
+                    return {"update_available": False, "message": f"Version {latest_version} found, but required asset missing."}
+            else:
+                logging.info("Application is up to date.")
+                return {"update_available": False, "message": "You are running the latest version."}
+
+        except requests.exceptions.RequestException as e:
+            logging.error(f"Error checking for updates: {e}")
+            return {"update_available": False, "error": f"Network error: {e}"}
+        except Exception as e:
+            logging.error(f"Unexpected error checking for updates: {e}")
+            return {"update_available": False, "error": f"An unexpected error occurred: {e}"}
+
+    def download_and_install_update(self, download_url):
+        """Downloads the update and triggers the external updater script."""
+        logging.info(f"Starting update download from: {download_url}")
+        try:
+            # Create a temporary file for the download
+            temp_dir = tempfile.gettempdir()
+            downloaded_exe_path = os.path.join(temp_dir, "open_rewrite_update.exe")
+
+            # Download the file
+            response = requests.get(download_url, stream=True, timeout=60) # Longer timeout for download
+            response.raise_for_status()
+            total_size = int(response.headers.get('content-length', 0))
+            downloaded_size = 0
+
+            with open(downloaded_exe_path, 'wb') as f:
+                for chunk in response.iter_content(chunk_size=8192):
+                    f.write(chunk)
+                    downloaded_size += len(chunk)
+                    # Optional: Send progress updates to UI if needed
+                    # progress = int(100 * downloaded_size / total_size) if total_size else 0
+                    # print(f"Download progress: {progress}%")
+
+            logging.info(f"Update downloaded successfully to: {downloaded_exe_path}")
+
+            # Find the updater script (assuming it's packaged next to the main exe)
+            app_dir = os.path.dirname(sys.executable)
+            updater_script_path = os.path.join(app_dir, "updater.py") # We will create this file next
+
+            if not os.path.exists(updater_script_path):
+                 # Fallback for development: check relative path
+                 dev_updater_path = resource_path(os.path.join('src', 'updater.py'))
+                 if os.path.exists(dev_updater_path):
+                     updater_script_path = dev_updater_path
+                 else:
+                    logging.error("updater.py not found!")
+                    return {"success": False, "error": "Updater script not found."}
+
+
+            # Prepare arguments for the updater script
+            current_exe_path = sys.executable
+
+            # Launch the updater script in a new process
+            # Use pythonw.exe to run without a console window
+            python_executable = sys.executable.replace("python.exe", "pythonw.exe") if "python.exe" in sys.executable else sys.executable
+
+            logging.info(f"Launching updater: {python_executable} {updater_script_path} \"{current_exe_path}\" \"{downloaded_exe_path}\"")
+            subprocess.Popen([python_executable, updater_script_path, current_exe_path, downloaded_exe_path])
+
+            # Exit the current application
+            logging.info("Exiting application to allow update.")
+            # Need to give the Popen call a moment to start
+            time.sleep(1)
+            # Force exit if webview doesn't close immediately
+            os._exit(0) # Force exit if necessary
+            # webview.windows[0].destroy() # Try graceful exit first
+            # sys.exit(0) # This might not always work reliably with webview
+
+            # This part might not be reached if os._exit works
+            return {"success": True, "message": "Update process initiated."}
+
+        except requests.exceptions.RequestException as e:
+            logging.error(f"Error downloading update: {e}")
+            return {"success": False, "error": f"Download failed: {e}"}
+        except Exception as e:
+            logging.error(f"Error during update process: {e}")
+            return {"success": False, "error": f"An unexpected error occurred: {e}"}
 
     def get_prompt(self, option, category):
         """Get prompt for a specified option and category."""
@@ -155,7 +286,7 @@ class WebViewAPI:
                 "Settings",
                 html_path,
                 width=1000,
-                height=600,
+                height=800,
                 js_api=self.settings_api,
                 background_color="#27272a"
             )

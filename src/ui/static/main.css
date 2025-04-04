@@ -14,6 +14,8 @@
     --color-emerald-500: oklch(0.696 0.17 162.48);
     --color-emerald-600: oklch(0.596 0.145 163.225);
     --color-emerald-700: oklch(0.508 0.118 165.612);
+    --color-teal-600: oklch(0.6 0.118 184.704);
+    --color-teal-700: oklch(0.511 0.096 186.391);
     --color-blue-500: oklch(0.623 0.214 259.815);
     --color-blue-600: oklch(0.546 0.245 262.881);
     --color-blue-700: oklch(0.488 0.243 264.376);
@@ -247,6 +249,9 @@
   .my-2 {
     margin-block: calc(var(--spacing) * 2);
   }
+  .mt-2 {
+    margin-top: calc(var(--spacing) * 2);
+  }
   .mt-4 {
     margin-top: calc(var(--spacing) * 4);
   }
@@ -292,9 +297,6 @@
   .hidden {
     display: none;
   }
-  .inline {
-    display: inline;
-  }
   .inline-block {
     display: inline-block;
   }
@@ -327,6 +329,9 @@
   }
   .h-screen {
     height: 100vh;
+  }
+  .max-h-40 {
+    max-height: calc(var(--spacing) * 40);
   }
   .w-3\/4 {
     width: calc(3/4 * 100%);
@@ -469,6 +474,10 @@
     border-style: var(--tw-border-style);
     border-width: 4px;
   }
+  .border-t {
+    border-top-style: var(--tw-border-style);
+    border-top-width: 1px;
+  }
   .border-t-2 {
     border-top-style: var(--tw-border-style);
     border-top-width: 2px;
@@ -520,6 +529,9 @@
   .bg-red-700 {
     background-color: var(--color-red-700);
   }
+  .bg-teal-600 {
+    background-color: var(--color-teal-600);
+  }
   .bg-white {
     background-color: var(--color-white);
   }
@@ -544,6 +556,9 @@
   .p-2 {
     padding: calc(var(--spacing) * 2);
   }
+  .p-3 {
+    padding: calc(var(--spacing) * 3);
+  }
   .p-4 {
     padding: calc(var(--spacing) * 4);
   }
@@ -567,6 +582,9 @@
   }
   .py-2 {
     padding-block: calc(var(--spacing) * 2);
+  }
+  .pt-6 {
+    padding-top: calc(var(--spacing) * 6);
   }
   .text-left {
     text-align: left;
@@ -726,6 +744,13 @@
     &:hover {
       @media (hover: hover) {
         background-color: var(--color-red-600);
+      }
+    }
+  }
+  .hover\:bg-teal-700 {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-teal-700);
       }
     }
   }

@@ -55,6 +55,84 @@ export function loadSettings() {
             formatsList.appendChild(formatDiv);
         });
     });
+    pywebview.api.get_current_version().then(version => {
+        document.getElementById('current-version-display').textContent = version || '?.?.?';
+    });
+
+    // Reset update status on load
+    // document.getElementById('update-status').textContent = `Current Version: ${document.getElementById('current-version-display').textContent}`;
+    document.getElementById('update-result').textContent = '';
+    document.getElementById('release-notes-container').classList.add('hidden');
+    document.getElementById('check-update-button').disabled = false;
+    document.getElementById('check-update-button').textContent = 'Check for Updates';
+}
+
+export function checkForUpdate() {
+    const checkButton = document.getElementById('check-update-button');
+    const updateResult = document.getElementById('update-result');
+    const releaseNotesContainer = document.getElementById('release-notes-container');
+    const installButton = document.getElementById('install-update-button');
+
+    checkButton.disabled = true;
+    checkButton.textContent = 'Checking...';
+    updateResult.textContent = 'Checking for updates...';
+    releaseNotesContainer.classList.add('hidden'); // Hide previous notes/button
+
+    pywebview.api.check_for_update().then(result => {
+        checkButton.disabled = false;
+        checkButton.textContent = 'Check for Updates';
+
+        if (result.update_available) {
+            updateResult.textContent = `Update available: Version ${result.latest_version}`;
+            document.getElementById('release-notes-content').textContent = result.release_notes || 'No release notes provided.';
+            releaseNotesContainer.classList.remove('hidden');
+
+            // Remove previous listener if any, then add new one
+            const newInstallButton = installButton.cloneNode(true); // Clone to remove listeners
+            installButton.parentNode.replaceChild(newInstallButton, installButton);
+
+            newInstallButton.textContent = `Download & Install v${result.latest_version}`;
+            newInstallButton.onclick = () => { // Use arrow function to capture result.download_url
+                promptAndUpdate(result.download_url, result.latest_version);
+            };
+
+        } else if (result.error) {
+            updateResult.textContent = `Error: ${result.error}`;
+        } else {
+            updateResult.textContent = result.message || 'You are already running the latest version.';
+        }
+    }).catch(error => {
+        console.error("Error calling check_for_update:", error);
+        checkButton.disabled = false;
+        checkButton.textContent = 'Check for Updates';
+        updateResult.textContent = 'Failed to check for updates. See console for details.';
+    });
+}
+
+function promptAndUpdate(downloadUrl, version) {
+    const installButton = document.getElementById('install-update-button'); // Get the potentially new button
+    if (confirm(`Are you sure you want to download and install version ${version}? The application will close and restart.`)) {
+        installButton.disabled = true;
+        installButton.textContent = 'Downloading...';
+        document.getElementById('update-result').textContent = 'Downloading update, please wait...';
+
+        pywebview.api.download_and_install_update(downloadUrl).then(installResult => {
+            // This part might not be reached if the app exits quickly
+            if (installResult.success) {
+                // Usually the app closes before this is shown
+                document.getElementById('update-result').textContent = 'Update process started. The app will now close.';
+            } else {
+                document.getElementById('update-result').textContent = `Update failed: ${installResult.error}`;
+                installButton.disabled = false;
+                installButton.textContent = `Download & Install v${version}`;
+            }
+        }).catch(error => {
+            console.error("Error calling download_and_install_update:", error);
+            document.getElementById('update-result').textContent = 'Update initiation failed. See console for details.';
+            installButton.disabled = false;
+            installButton.textContent = `Download & Install v${version}`;
+        });
+    }
 }
 
 export function saveSettings() {
