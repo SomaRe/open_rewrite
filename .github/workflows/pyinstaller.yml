@@ -45,7 +45,7 @@ jobs:
 
     - name: Build with PyInstaller
       run: |
-        # source .venv/Scripts/activate # Might be needed
+        .venv/Scripts/activate
         pyinstaller open-rewrite-windows-x64.spec
 
     - name: Upload executable artifact
