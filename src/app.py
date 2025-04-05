@@ -286,7 +286,7 @@ class WebViewAPI:
                 "Settings",
                 html_path,
                 width=1000,
-                height=800,
+                height=700,
                 js_api=self.settings_api,
                 background_color="#27272a"
             )
