@@ -49,7 +49,9 @@ jobs:
           LATEST_TAG_VERSION: ${{ steps.get_latest_tag.outputs.result }}
         run: |
           python -c "from packaging.version import parse; \
-                     print('should_release=' + str(parse('$CURRENT_VERSION') > parse('$LATEST_TAG_VERSION')).lower())" >> $GITHUB_OUTPUT
+                     current = '${{ env.CURRENT_VERSION }}'.strip('\"'); \
+                     latest = '${{ env.LATEST_TAG_VERSION }}'.strip('\"'); \
+                     print('should_release=' + str(parse(current) > parse(latest)).lower())" >> $GITHUB_OUTPUT
           echo "Current: $CURRENT_VERSION, Latest: $LATEST_TAG_VERSION"
 
   build:
