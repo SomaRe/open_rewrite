@@ -1,4 +1,3 @@
-import os
 import re
 from pathlib import Path
 
@@ -26,5 +25,4 @@ def get_version():
         return version_match.group(1)
     raise RuntimeError("Version not found in pyproject.toml")
 
-# Usage
 __version__ = get_version()
