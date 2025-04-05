@@ -1,6 +1,6 @@
 [project]
 name = "open-rewrite"
-version = "0.0.6"
+version = "0.0.7"
 description = ""
 authors = []
 readme = "README.md"
